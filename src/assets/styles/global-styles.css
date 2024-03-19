@@ -1,0 +1,37 @@
+:root {
+  /* 标题颜色 */
+  --main-title-color: #ffffff;
+  /* 作者发布日期\文章内容、背景颜色 */
+  --meta-info-color: #888;
+  --article-body-color: #d9dde0;
+  --article-background-color: #211f1e;
+  /* 名言警句颜色 */
+  --aphorisms-color: #e7e9eb;
+  --aphorisms-logo-color: #feffff;
+
+  --body-background-color: #18181c;
+  /* 轮播图标题大小 */
+  --lem: calc(10px + .6vw);
+  --bc10: hsl(210, 8%, 70%);
+  /* 文章p标签大小 */
+  --gqui-mb: 24px;
+
+  -theme-color-rgb: 94, 186, 125;
+  --primary-rgb: 94, 186, 125;
+
+  --photo-gird-color:#3b3939;
+
+  --n-bezier: cubic-bezier(.4, 0, .2, 1);
+}
+
+:root{
+  box-sizing:border-box;
+  /* font-size:calc(0.5em+1vw); */
+}
+
+::before,
+::after{
+  box-sizing:inherit；
+}
+
+
