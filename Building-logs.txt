@@ -78,7 +78,13 @@ gh alias set
 	1、文章详情和文章列表页面制作（存在两个问题：1、字体   2、详情页怎么配合后台实现文章+注释效果 3、左右按键翻页）
 	2、研究giscus评论系统怎么引用（大致有点思路）Google，百度、youtub、bilibili都找了竟然没有vue+giscus的教程视频！
 
-
+20240321
+	vite.config.js的export default defineConfig添加以下代码，实现运行项目自动打开浏览器
+	  server:{
+    open:true,
+    host:'127.0.0.1',
+    port:3001
+  },
 
 
 
