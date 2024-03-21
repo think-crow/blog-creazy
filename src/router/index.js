@@ -14,7 +14,10 @@ import Discover from "../pages/life-i/extend/Discover.vue";
 
 import DesignOurLife from "../pages/design-our-life/DesignOurLife.vue";
 import LifeStory from "../pages/life-story/LifeStory.vue";
+
 import ShareEye from "../pages/share-eye/ShareEye.vue";
+import ArticleContent from "../pages/share-eye/ArticleContent.vue";
+
 
 
 const router = createRouter({
@@ -72,6 +75,11 @@ const router = createRouter({
     {
       path: "/ShareEye",
       component: ShareEye,
+     
+    },
+    {
+      path:'/articlecontent',
+      component:ArticleContent,
     },
   ],
 });

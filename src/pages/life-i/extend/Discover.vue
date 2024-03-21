@@ -191,7 +191,7 @@
         </div>
       </n-tab-pane>
       <!-- 关于本站---------------------------------------怕找不到 -->
-      <n-tab-pane name="jay chou" tab="关于本站">
+      <n-tab-pane name="jay chou" tab="关于本站" class="about-me-main">
         <div class="about-me">
           <h1>初衷</h1>
           <p>
@@ -218,8 +218,32 @@
             2、英文很重要：它能赋予我们英文阅读和交流的能力！！！！！！这个为自己未来的一个目标（解释：有人说现在各种翻译工具软件代替了学习英语：这就好比你到哪里都要背个包，用的话还要打开，成年累月会耽误多长时间不可想象！原著的阅读能传达很多思想，翻译只是机器理解！这也是自己小时候的一个梦想，从高三把高中英语单词背了六遍开始！！）
           </p>
           <p><a href="">查看详细简历</a></p>
-          <h1></h1></div
-      ></n-tab-pane>
+          <h1></h1>
+        </div>
+        <div class="contact-me" ref="scrollContainer">
+          <n-card
+            ><h3>1、联系站主</h3>
+            <p>邮箱：rhaoshuang@163.com</p>
+
+            <p>GitHub：think-crow</p>
+            <h3>2、建站请联系博主微信：</h3>
+            <p>微信：believe-me</p>
+            <h3>3、有任何建议或界面显示问题，请点击下面提交：</h3>
+            <div class="jianyi-text">
+              <n-space vertical>
+                <n-input
+                  v-model:value="value"
+                  type="textarea"
+                  placeholder="Go-Go-Go!..."
+                />
+              </n-space>
+              <n-button style="float: right; margin-top: 0.5em">
+                提交
+              </n-button>
+            </div>
+          </n-card>
+        </div>
+      </n-tab-pane>
     </n-tabs>
   </n-space>
 </template>
@@ -256,6 +280,8 @@ watchEffect(() => {
 onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
 });
+
+// 页面跟着滚轮
 </script>
 
 <style scoped>
@@ -337,12 +363,28 @@ p {
   margin-bottom: 1.5em;
 }
 /* <!-- 关于本站---------------------------------------怕找不到 --> */
+.about-me-main {
+  display: flex;
+}
 .about-me {
   padding: 1em 2em;
-  width: 90%;
+  width: 70%;
+  /* border: 1px solid red; */
+}
+.contact-me {
+  width: 30%;
+  /* height: 100%; */
+  /* border: 1px solid red; */
+  padding: 2em 1em 1em 1em;
 }
 
-h1 {
+.contact-me .n-card {
+  height: 50%;
+  padding: 0.5em 1.2em;
+  box-shadow: 0 0 2px;
+}
+h1,
+h3 {
   margin-top: 1.4em;
 }
 

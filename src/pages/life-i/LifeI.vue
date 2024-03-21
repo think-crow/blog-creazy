@@ -339,7 +339,7 @@ body {
 }
 
 ::v-deep(.n-card__content h1) {
-  margin-left: 1em;
+  /* margin-left: 1em; */
 }
 /* .n-card__content {
   padding: 0;

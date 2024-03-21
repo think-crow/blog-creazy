@@ -1,4 +1,11 @@
 :root {
+  --body-width: 992px;
+  --text-width: 100%;
+  --bg-body: white;
+  --bg-block: #f9f9f9;
+  /* h1的背景图颜色 */
+  --border-color: #ddd;
+  --box-shadow: 5px 5px 5px #eee;
   /* 标题颜色 */
   --main-title-color: #ffffff;
   /* 作者发布日期\文章内容、背景颜色 */
@@ -22,6 +29,10 @@
   --photo-gird-color:#3b3939;
 
   --n-bezier: cubic-bezier(.4, 0, .2, 1);
+
+  
+
+
 }
 
 :root{

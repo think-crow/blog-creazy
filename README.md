@@ -1,7 +1,16 @@
-# Vue 3 + Vite
+## 网站介绍
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+博客
+爱好
+关于
+收藏
+人生经历
 
-## Recommended IDE Setup
+# readme.txt
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+详细记录了本网站的开发历程，对于新手可能会有所帮助
+
+# 项目运行
+
+1、clon 到本地后 Vscode 运行 npm i
+2、npm run dev 运行项目
