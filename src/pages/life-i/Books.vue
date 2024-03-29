@@ -1,49 +1,141 @@
+<script setup>
+import { onMounted, ref, watchEffect } from "vue";
+import axios from "axios";
+// 节流  单位事件只执行一次
+import { throttle } from "lodash-es";
+
+const imageSrc = ref("");
+
+const page = ref(1);
+const limit = 1;
+const total = ref(0);
+const data = ref([]);
+
+const category = ref("all");
+
+// 分类
+const stopwatch = watchEffect(() => {
+  if (category.value != "all") {
+    postData();
+  }
+});
+
+// 存储请求回来的富文本内容
+const richTextContent = ref("");
+
+const postData = async () => {
+  const response = await axios
+    .get(
+      `http://127.0.0.1:3000/api/bookmovies_data?page=${page.value}&limit=${limit}&category=${category.value}`
+    )
+    .then((res) => {
+      total.value = res.data.total;
+      if (page > total) page = 1;
+      data.value = res.data.result[0];
+      richTextContent.value = data.value.myreflections;
+
+      imageSrc.value = `http://127.0.0.1:3000/${data.value.img_path}`;
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("get 请求失败，请查看控制台错误信息！");
+    });
+};
+// 按键上下页
+function handleKeyDown(event) {
+  if (event.key === "ArrowLeft") {
+    // console.log("左方向键被按下");
+    prevPage();
+  } else if (event.key === "ArrowRight") {
+    // console.log("右方向键被按下");
+    nextPage();
+  }
+}
+// 节流
+const throttledHandleKeyDown = throttle(handleKeyDown, 0);
+// 上一页
+const prevPage = () => {
+  page.value = page.value > 1 ? page.value - 1 : total.value;
+  postData();
+};
+// 下一页
+const nextPage = () => {
+  page.value = page.value * limit < total.value ? page.value + 1 : 1;
+  postData();
+};
+
+// 移除分类选择后radio的焦点
+const handleClick = () => {
+  const targetElement = document.querySelector(".quan");
+  if (targetElement) {
+    targetElement.focus();
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "instant", // 立即跳转，而非平滑滚动
+    });
+  }
+};
+// const handleClick = (event) => {
+//   // 在点击事件处理函数中调用blur方法来移除焦点
+//   event.target.blur();
+// };
+
+onMounted(() => {
+  postData();
+});
+</script>
+
 <template>
-  <div class="container">
-    <div class="books">
-      <div class="book-title"><h1 style="margin-top: -20px">《香水》</h1></div>
-      <div class="book-show">
-        <div class="book-image">
-          <!-- <img src="../../assets/images/xiangshui.jpeg" alt="" /> -->
-          <n-image
-            width="300px"
-            height="400px"
-            src="/src/assets/images/xiangshui.jpeg"
-          />
-        </div>
-        <div class="book-text">
-          <p>
-            《香水》（德语：Das
-            Parfüm）是德国作家帕特里克·聚斯金德于1985年发表的长篇小说。
-            《香水》叙述了一个奇才怪杰谋杀二十六个少女的故事。其每一次谋杀都是一个目的：只是因为迷上她们特有的味道。对格雷诺耶来说，每一次都是一场恋爱，但是他爱的不是人，而是她们身上的香味；谋杀她们只是为了要永远占有，并且拥有他所爱的那种没有感觉，没有生命的“香味”。
-            [1]
-          </p>
-        </div>
-      </div>
-      <n-divider />
-      <div class="book-think">
-        <h1>语句摘抄及感悟:</h1>
-        <p>
-          小说中的“少女”作为纯洁、美和爱的象征，却被格雷诺耶残忍地剥夺了生命，只是因为后者要占有她的香味，让她的香味成为他“整理其他香味”的“模板”。聚斯金德在作品中用“少女”作为隐喻，揭示了人类为了满足自身的需要，对技术资源疯狂索取的状况，揭示了主体对客体的无情压迫和冷酷占有的暴力，揭示了工具理性对自然美好的摧残。<br />
-          同时，技术使主体对于金钱和权力的夺取也成为可能。金钱成为现代社会个人和社会生活的基本动力，也是协调个体间及其同整个社会相互关系的重要媒介。金钱在社会中已经成为一个高于一切的东西，覆盖了人的思想和情感，成为人的主宰。而金钱和权力是不可分割的两面，追求金钱的行动必须笼罩在“合法外衣“下，而取得“权力“就意味着可以披上这件“合法外衣”。现代社会利用技术作为手段取得金钱和权力的过程使理性与金钱、权力相互渗透，相互勾结，必然导致强势的主体与弱势的客体“不能和平相处。，一切活动都变成了金钱和权力的关系。小说中格雷诺耶与格里马·巴尔蒂尼之间就是这种以技术为手段、以理性为纽带、以金钱和权力为主导的主体客体关系的具体体现。聚斯金德巧妙运用文学语言，把笔下的角色无一例外地安置在这由金钱和权力交织而成的理性的“柔软网络”中，让其被深深束缚，无法动弹。<br />
+  <n-radio-group v-model:value="category" name="radiogroup1" class="fenlei">
+    <n-space vertical>
+      <!-- <n-button @click="dianji">点击</n-button> -->
+      <n-radio value="books_1" @click="handleClick">书籍 </n-radio>
+      <n-radio value="movies_2" @click="handleClick">电影</n-radio>
+    </n-space>
+  </n-radio-group>
 
-          格雷诺耶利用神奇香水的“气味”为自己塑造了“神”的身份，此处的“气味”演变为格雷诺耶对人类的操控力。聚斯金德用“气味“的推演描绘了一幅现代主义的狂欢图：启蒙理性杀死了上帝，推翻了古典时期的种种道德规范，可是却没有相应建立自己的信仰与道德规范，导致精神道德的发展远远落后于工具理性的发展，“没有上帝的自我”在权力欲望、原始本能欲望的操纵下道德沦丧，精神空虚，行为丑恶。并且，极富讽刺意味的是，原本被排斥、压制的“异端”格雷诺耶在狂欢中成为了人们顶札膜拜的“神”，这种怪异“制造出一种嘲讽地动摇了世俗道德原则的魔力”，强化了作者对道德危机所表现出的忧思。
-          格雷诺耶生存的原因是力图控制他人，“让别人爱自己”，可是在他梦想实现之际，他却没有感到欢乐与满足，他发现自己“憎恨”丑陋的世人，希望得到人们对他对等的“恨”，哪怕只从一个人那儿得到这种真正的感情回应。可是，“他的希望落空了”。于是，格雷诺耶对这个变形的、伪装的、虚假的社会完全绝望了。他“用了世上最高级的香水制造假面具”，即使他可以借助这瓶香水成为“全能的芳香上帝”；可是，“在这假面具下他没有面孔，完全没有气味”，作为他“存在”证明的“气味”依然缺席，他还是不存在的，“他永远不知道他是谁，所以他对世界、对自己、对他的香水毫不在乎”。身份幻灭的绝望导致他最终选择回到出生地，再次利用了那瓶神奇香水，让“一群流氓、盗贼、杀人犯、持刀斗殴者、妓女、逃兵、走投无路的年轻人”彻底分食了自己，选择了自我消解之路。<br />
-
-          作为残忍的凶手，他本人的悲剧结局并不令人同情，但他一生由被压制到反抗到操控众生到自我灭亡的经历却不由令人联想起阿尔多·罗西那句名言：“受到打扰的个人命运在集体命运里经常性地悲哀和艰难地参与。”这意味着，在这个迷失的世界里，个人的行为表达不是压迫性的就是幻觉性的，因此注定了个体自我废弃或自我消解的悲剧性结局。依此而言，格雷诺耶既是理性的受害者和牺牲品，又是理性工具的践行者，他的一生可以看作理性被推向极致的一幕现代悲剧。聚斯金德用格雷诺耶的悲剧为理性的过度发展敲响了警钟。
-          聚斯金德创作《香水》的目的，很多评论家认为他有借古喻今的意图，这是毋庸置疑的。作家是生活在当下的现代人，回复传统18、19世纪的经典对他和读者来说毫无意义。一方面，过去的年代已经有太多传统经典的诞生似乎不需要一个现代人再去插上一脚；另一方面，过去的已经过去，既然生活在当代，当然更应把当代人的思考融入对文学历史的创造中。作者把《香水》的叙述背景定在18世纪的法国，也许只有在那个年代那个国度才能拥有如此昌盛的手工业文明和那个文明时代所诞生的精英。但是把一切物质化的外层抽去，而仅仅把探究的目光投射在整个社会的精种层面时，会很强烈地感受到作者笔下的格雷诺耶很可能是整个世界的缩影，其缺陷正是世界的缺陷。
-        </p>
+  <div class="quan" tabindex="0" @keydown="throttledHandleKeyDown">
+    <div class="container">
+      <div class="books">
+        <div class="book-title">
+          <h1 style="margin-top: -20px">{{ data.title }}</h1>
+        </div>
+        <div class="book-show">
+          <div class="book-image">
+            <!-- <img src="../../assets/images/xiangshui.jpeg" alt="" /> -->
+            <n-image width="300px" height="400px" :src="imageSrc" />
+          </div>
+          <div class="book-text">
+            <p>{{ data.summary }}</p>
+          </div>
+        </div>
+        <n-divider />
+        <div v-html="richTextContent" class="book-think"></div>
       </div>
+    </div>
+
+    <div class="fanye">
+      <n-button @click="prevPage" class="shang">上一章</n-button
+      ><n-button @click="nextPage" class="xia">下一章 </n-button>
     </div>
   </div>
 </template>
-
-<script setup></script>
 
 <style scoped>
 * {
   margin: 0;
   padding: 0;
+}
+
+/* 这个很奇怪 不加边框左上角样式偏下 */
+.quan {
+  border: 1px solid #18181c;
+  outline: none; /* 焦点时不显示边框 */
+  /* pointer-events: none; */
+}
+.naive-radio:focus {
+  outline: none;
 }
 .container {
   margin: 40px auto;
@@ -113,5 +205,35 @@ p {
 h1 {
   margin-top: 30px;
   font-family: "Courier New", Courier, monospace;
+}
+
+/* 分类按钮 */
+.fenlei {
+  /* border: 1px solid red; */
+  float: left;
+  padding-top: 1em;
+}
+.fenlei .n-radio {
+  /* border: 1px solid red; */
+  width: 5em;
+  margin-left: 1em;
+  /* margin-bottom: 0; */
+}
+
+.fanye {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.fanye .n-button {
+  padding: 1em 1.2em;
+}
+
+.shang {
+  margin-left: 6em;
+}
+.xia {
+  margin-right: 6em;
 }
 </style>

@@ -98,7 +98,7 @@
         <div class="catName">
           <ul class="post-categories">
             <li>
-              <a href="#" rel="category">雜文</a>
+              <a href="#" rel="category">自由女神</a>
             </li>
           </ul>
         </div>
@@ -114,12 +114,17 @@
         <div class="jianyi-text">
           <n-space vertical>
             <n-input
-              v-model:value="value"
+              v-model:value="postDataInput"
               type="textarea"
               placeholder="Go-Go-Go!..."
+              name="jianyi"
+              maxlength="3000"
+              show-count
+              clearable
+              minlength="10"
             />
           </n-space>
-          <n-button color="#8a2be2">
+          <n-button @click="postData">
             <Icon size="28">
               <IosArrowRoundForward />
             </Icon>
@@ -155,22 +160,51 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { ref } from "vue";
 // 轮播图箭头图标
 import { ArrowBack, ArrowForward } from "@vicons/ionicons5";
 
 // import { NConfigProvider, NThemeEditor, darkTheme } from "naive-ui";
 
-// 这个图标很影响加载速度
-// 按钮图标
+// 按钮图标        // 这个图标很影响加载速度
 import { IosArrowRoundForward } from "@vicons/ionicons4";
 import { Icon } from "@vicons/utils";
-
 /**
  * @type {import('naive-ui').GlobalThemeOverrides}
  */
 
 const value = ref(null);
+
+const postDataInput = ref("");
+
+const postData = async () => {
+  const data = { jianyi: postDataInput.value };
+  const response = await axios
+    .post("http://127.0.0.1:3000/api/suggests", data)
+    .then((res) => {
+      console.log(postDataInput.value);
+      alert("已提交成功！");
+      postDataInput.value = "";
+    })
+    .catch((err) => {
+      // console.error(err);
+      alert("出现错误，麻烦小主留言告知！");
+    });
+};
+
+// const postData = async () => {
+//   const response = await axios
+//     .get("http://127.0.0.1:3000/api/1234")
+//     .then((res) => {
+//       console.log(res.data);
+//       alert("get 请求成功！返回数据：");
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//       alert("get 请求失败，请查看控制台错误信息！");
+//     });
+// };
 </script>
 
 <style scoped>
@@ -180,6 +214,7 @@ const value = ref(null);
   max-width: 850px;
   /* overflow: hidden; */
   background: #20211e;
+  height: 100%;
 
   -webkit-font-smoothing: antialiased;
   --gqui-fs: 16px;
@@ -423,10 +458,10 @@ li {
 .n-button {
   float: right;
   margin-top: 0.9em;
-  background-color: #ffffffc8;
 }
-.n-button:hover {
-  background-color: #fff;
+
+.n-input {
+  background-color: #373835;
 }
 
 @media screen and (max-width: 800px) {
