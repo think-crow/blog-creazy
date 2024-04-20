@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="container">
+    <div class="shengzi"><Gsap /></div>
     <!-- 导航栏 -->
     <nav class="navbar">
       <!-- 一个文字logo -->
+      <title>MyLife</title>
       <a href="#" class="logo">MyLife</a>
       <!-- 菜单 -->
       <ul class="nav-links">
@@ -55,7 +57,7 @@
               >
             </span>
             <template #dropdown>
-              <el-dropdown-menu>
+              <el-dropdown-menu class="drop-menu">
                 <router-link
                   to="/lifei/photoalbum"
                   @click="setActive(4)"
@@ -104,7 +106,7 @@
           <!-- 页面显示 -->
 
           <router-view></router-view>
-          <n-divider />
+          <!-- <n-divider /> -->
           <!-- 底部名言 -->
           <div class="mingyan">
             <div class="light-green">
@@ -124,11 +126,11 @@
             <div class="footer-content">
               <div class="footer-section">
                 <h3>域名信息</h3>
-                <p>www.yourdomain.com</p>
+                <p>www.rwany.net</p>
               </div>
               <div class="footer-section">
                 <h3>备案号</h3>
-                <p>粤ICP备12345678号</p>
+                <p>豫ICP备12345678号</p>
               </div>
               <div class="footer-section">
                 <h3>法律及版权声明</h3>
@@ -138,7 +140,7 @@
               <div class="footer-section">
                 <h3>联系方式</h3>
                 <p>联系电话：010-12345678</p>
-                <p>邮箱：info@yourdomain.com</p>
+                <p>邮箱：rwany.net@gmail.com</p>
               </div>
             </div>
           </template>
@@ -146,21 +148,20 @@
       </div>
     </n-config-provider>
   </div>
+  <n-back-top :right="18" />
 </template>
 
 <script setup>
 import { ref } from "vue";
 // 暗亮主题切换
-import { NConfigProvider, NThemeEditor, darkTheme } from "naive-ui";
-
+import { darkTheme } from "naive-ui";
+// import { ElConfigProvider, ElThemeEditor } from "element-plus";
+// ,
+// import { NConfigProvider, NThemeEditor } from "naive-ui";
 // 轮播图
 // 调整主题变量
 
-function toggleMenu() {
-  // 可以在这里编写打开/关闭菜单的逻辑
-}
-
-const activeIndex = ref(null);
+const activeIndex = ref(0);
 
 const setActive = (index) => {
   activeIndex.value = index;
@@ -168,6 +169,29 @@ const setActive = (index) => {
 </script>
 
 <style scoped>
+.container {
+  position: relative;
+}
+
+.shengzi {
+  position: absolute;
+  right: 2em;
+  z-index: 100;
+}
+
+.n-divider {
+  /* border: px solid red; */
+  height: 0.005em;
+  width: 95%;
+  background-color: hsl(210, 8%, 70%);
+  /* align-items: center; */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.n-card {
+  border-radius: 0;
+}
 * {
   margin: 0;
   padding: 0;
@@ -211,7 +235,6 @@ body {
 
 .nav-links li:nth-last-child(2) {
   margin: auto;
-  /* padding: 10px 20px; */
 }
 /* 用了element-ui就影响布局 这里弄了半天 */
 .nav-links li:nth-last-child(2) a {
@@ -229,7 +252,7 @@ body {
   padding: 10px 10px;
   /* border-radius: 5px; */
   transition: background-color 0.2s ease-in-out;
-  border-bottom: 1px solid transparent;
+  border-bottom: 3px solid transparent;
   margin: 0 10px;
 }
 
@@ -253,82 +276,34 @@ body {
   transition: transform 1s ease-in-out;
   transform: rotate(360deg);
 }
-/* 响应式样式 */
-@media screen and (max-width: 768px) {
-  .navbar {
-    height: auto;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-  }
-
-  .nav-links {
-    width: 100%;
-    margin-top: 20px;
-    flex-direction: column;
-    align-items: center;
-  }
-  .nav-links li a {
-    color: #f2f2f2;
-  }
-  .nav-links li {
-    margin: 10px 0;
-  }
-
-  .nav-links li a {
-    padding: 10px;
-    text-align: center;
-  }
-
-  .burger {
-    display: block;
-  }
-}
-
 /* =====container======== */
 .container {
   /* margin-top: 10px; */
   padding: 0;
   margin: 0;
+
+  /* border: 1px solid red; */
+  min-height: 480px;
 }
 .n-card {
-  /* margin-top: -6px; */
-
-  /* padding: 0px; */
-  /* box-sizing: border-box; */
   position: relative;
 }
 
 /* 底部名言 */
 .mingyan {
-  /* display: flex;
-  justify-content: space-around;
-  align-items: center; */
   font-family: palatino linotype, book antiqua, Palatino, FandolKai, serif;
 }
 
 .light-green {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   height: 140px;
 
   font-size: calc(8px + 1vw);
   color: var(--aphorisms-color);
-  /* font-weight: 600; */
-  padding: 0.8em 2em;
+
+  padding: 4em 2em 1.4em 2em;
   color: #938e8e;
-  /* text-indent: 2em; */
 }
 
-@media screen and (max-width: 768px) {
-  ::v-deep(.n-card__content) {
-    padding: 24px 0;
-  }
-  .mingyan {
-    display: none;
-  }
-}
 ::v-deep(.n-card__content) {
   padding: 0;
   /* padding-top: 0 !important; */
@@ -338,9 +313,6 @@ body {
   /* padding-left: 1em; */
 }
 
-::v-deep(.n-card__content h1) {
-  /* margin-left: 1em; */
-}
 /* .n-card__content {
   padding: 0;
 } */
@@ -355,6 +327,7 @@ footer {
 .footer-content {
   display: flex;
   justify-content: space-around;
+  /* border-top: 1px solid hsl(210, 8%, 70%); */
 }
 
 .footer-section {
@@ -384,11 +357,11 @@ h3 {
 
 .el-dropdown-menu a {
   color: #fff;
-  font-size: calc(3px + 1vw);
+  font-size: calc(0.9 * var(--lem));
 
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  /* border-radius: 5px; */
+
   padding: 0.5em 0.5em;
   margin: 0 0.5em;
   font-family: Arial, Helvetica, sans-serif;
@@ -400,5 +373,127 @@ h3 {
 /* 导航栏跟踪下划线 */
 .active {
   border-bottom: 1px solid #f2f2f2 !important;
+}
+
+p {
+  white-space: pre-wrap;
+  word-break: break-word;
+  letter-spacing: 0.05em;
+  line-height: 1.8em;
+  margin-bottom: var(--gqui-mb);
+  text-align: justify;
+}
+
+/* 响应式样式 */
+@media screen and (max-width: 768px) {
+  /* 导航栏------------ */
+  .navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; /* 垂直居中 */
+    height: 4em;
+    background-color: #1f1f1f; /* 添加背景颜色 */
+    box-shadow: 0px 2px 5px rgb(6, 213, 116);
+  }
+
+  /* 标志样式 */
+  .logo {
+    display: none;
+  }
+
+  /* 导航链接样式 */
+  .nav-links {
+    display: flex;
+    margin: 0;
+    padding: 0; /* 添加 padding 以去除列表默认的内边距 */
+    list-style: none; /* 去除列表样式 */
+  }
+
+  .nav-links li {
+    padding: 0;
+    display: flex;
+    align-items: center; /* 垂直居中 */
+  }
+
+  /* 导航链接样式调整 */
+  .nav-links li a {
+    font-size: 1.1em;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.5em 0.5em; /* 调整链接内边距 */
+    transition: background-color 0.2s ease-in-out;
+    border-bottom: 1px solid transparent;
+    margin: 0;
+    /* border: 1px solid red; */
+  }
+
+  /* 调整倒数第二个导航链接样式 */
+  .nav-links li:nth-last-child(2) a {
+    /* border: none; 去除边框 */
+  }
+
+  .nav-links li a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* 添加 hover 背景色 */
+  }
+  .burger {
+    display: none;
+  }
+
+  /* ======================= */
+  ::v-deep(.n-card__content) {
+    padding: 12px 0;
+  }
+
+  .footer-content {
+    flex-direction: row-reverse;
+    display: flex;
+  }
+
+  .footer-section {
+    /* border: 1px solid red; */
+    flex-grow: 1;
+  }
+
+  .footer-section p {
+    margin: 0;
+    font-size: 0.8em;
+  }
+
+  h3 {
+    margin-bottom: 0;
+    margin-top: 1em;
+    font-size: 1.2em;
+    font-weight: 200;
+  }
+  /* 选中第一个 .footer-section 元素 */
+  .footer-section:nth-child(1) {
+    display: none;
+  }
+
+  /* 选中第四个 .footer-section 元素 */
+  .footer-section:nth-child(4) {
+    display: none;
+  }
+
+  .footer-section:nth-child(2) {
+    /* display: none; */
+    width: 40%;
+  }
+
+  .n-divider {
+    margin-bottom: 0;
+  }
+
+  /* element-ui下拉菜单 */
+
+  .el-dropdown-menu {
+    background-color: #1f1f1f;
+    padding: 1em 0.5em;
+  }
+
+  .el-dropdown-menu a {
+    font-size: calc(1.1 * var(--lem));
+    padding: 0.5em 0.3em;
+  }
 }
 </style>

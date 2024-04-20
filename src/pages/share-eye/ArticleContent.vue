@@ -1,163 +1,187 @@
-<template class="en">
-  <div class="container">
-    <div class="crop-h"></div>
-    <div class="crop-v"></div>
-    <div class="crop-c"></div>
-    <nav class="nav-top small">
-      <!-- <div class="logo">
-        <a href="#"
-          ><img src="/src/assets/images/logo.png" alt="Haoshuang Ren"
-        /></a>
-      </div> -->
-      <div class="menu">
-        <span><a href="#">分类：</a></span>
-        <span><a href="#">个人日志</a></span>
-        <span><a href="#">技术</a></span>
-        <span><a href="#">优选文章</a></span>
-      </div>
-    </nav>
-    <div class="article-meta">
-      <h1 class="title">文章</h1>
-      <h3 class="meta-line">
-        <span>
-          <span class="author">任豪爽</span>
-          <span class="date">2024-03-20</span>
-        </span>
-        <span class="term"></span>
-      </h3>
-    </div>
-
-    <div class="main">
-      <nav id="TableOfContents">
-        <ul>
-          <li>
-            <a href="#如何创造一个赚钱的副业" title=""
-              >如何创造一个赚钱的副业</a
-            >
-          </li>
-
-          <li>
-            <a href="#如何创造一个赚钱的副业" title=""
-              >如何创造一个赚钱的副业</a
-            >
-          </li>
-          <li>
-            <a href="#如何创造一个赚钱的副业" title=""
-              >如何创造一个赚钱的副业</a
-            >
-          </li>
-          <li>
-            <a href="#如何创造一个赚钱的副业" title=""
-              >如何创造一个赚钱的副业</a
-            >
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <a href="#如何创造一个赚钱的副业" title=""
-              >如何创造一个赚钱的副业</a
-            >
-          </li>
-
-          <li>
-            <a href="#如何创造一个赚钱的副业" title=""
-              >如何创造一个赚钱的副业</a
-            >
-          </li>
-          <li>
-            <a href="#如何创造一个赚钱的副业" title=""
-              >如何创造一个赚钱的副业</a
-            >
-          </li>
-          <li>
-            <a href="#如何创造一个赚钱的副业" title=""
-              >如何创造一个赚钱的副业</a
-            >
-          </li>
-        </ul>
+<template>
+  <div class="shengzi"><Gsap /></div>
+  <div class="en" tabindex="0" @keydown="handleKeyDown">
+    <div class="container">
+      <div class="crop-h"></div>
+      <div class="crop-v"></div>
+      <div class="crop-c"></div>
+      <nav class="nav-top small">
+        <!-- <div class="logo">
+          <a href="#"
+            ><img src="/src/assets/images/logo.png" alt="Haoshuang Ren"
+          /></a>
+        </div> -->
+        <div class="menu">
+          <span><a href="#"></a></span>
+          <!-- <span><a href="#">个人日志</a></span> -->
+          <router-link
+            :to="{
+              path: '/Shareeye',
+            }"
+            style="color: red"
+            >点击返回</router-link
+          >
+          <!-- <span><a href="#">技术</a></span>
+        <span><a href="#">优选文章</a></span> -->
+        </div>
       </nav>
-      <p>
-        世上还有哪个词比“财务自由”更吸引人的吗？恐怕是没有了。当然，圣贤除外，但圣贤毕竟是少数。我不是圣人，所以我也一样爱财，只不过在目前的工作状态下我并不贪财而已。我对财富的渴望并不在于财富本身，而在于重分配权。换句话说，我并没多少需要满足的个人物欲，我有兴趣的只是将财富按照我的意愿重分配给他人。本质上这其实是自私的想法（比如我认为索罗斯做慈善完全是自私的行为，其敛财手段太卑劣）。
-      </p>
-      <h2 id="如何创造一个赚钱的副业">
-        如何创造一个赚钱的副业
-        <span class="anchor"
-          ><a
-            href="#如何创造一个赚钱的副业"
-            title="https://yihui.org/cn/2018/06/financial-freedom/#如何创造一个赚钱的副业"
-            >#</a
-          ></span
-        >
-      </h2>
-      <p>
-        没时间做一项副业？整块时间可能是没有，大家都很忙，但每天二十分钟也许是有的。你每天刷微信微博的时间应该会大大超过二十分钟吧？早上起床前和晚上睡觉前是不是绑在手机上？想想从那里你得到了什么，再想想你为什么穷（本来你很富，可是你把最宝贵的资源——时间——都心甘情愿支付给了网红、大咖和点赞之交们
-      </p>
-      <blockquote>
-        <p>
-          意彼（刘邦和项羽）未必无退逊之心、正廉之节，盖以视其（秦始皇）靡曼骄崇，然后生其谋耳。为英雄者犹若是，况常人乎？
-        </p>
-      </blockquote>
-      <p>
-        即：你负担得起任何东西，但负担不起所有东西。比如相当一部分人只要努把力，应该都有财力满足任意一项心愿，但没有人能够满足所有心愿（就算你是王思聪也没这个本事——比如你花钱把天安门城楼上的那幅头像换成你自己的试试）。这条定理可以有很多推论，比如码农可以实现任何软件功能，但不能实现所有功能，或修正任何缺陷，但不能修正所有缺陷（高德纳大人除外）。如果没有优先级和适当的取舍，我们的生活注定会浑浑噩噩。
-      </p>
-
-      <sup id="fnref:1" class="note-ref"
-        ><a
-          class="footnote-ref"
-          role="doc-noteref"
-          title="https://yihui.org/cn/2018/06/financial-freedom/#fn:1"
-          >[1]</a
-        ></sup
-      >
-      <div class="side side-right footnotes">
-        <p>
-          <span class="bg-number">[1]</span>
-          我不是鼓励不要关心朋友，我只是觉得一个普通人能真正关心的朋友数量绝对比朋友圈的量级小得多。&nbsp;
-        </p>
+      <div class="article-meta">
+        <h1 class="title">{{ data.title }}</h1>
+        <h3 class="meta-line">
+          <span>
+            <span class="author">{{ data.author }}</span>
+            <span class="date">{{ formatDate(data.submi_date) }}</span>
+          </span>
+          <span class="term"></span>
+        </h3>
       </div>
 
-      <ul>
-        <li>地点</li>
-        <li>时间</li>
-        <li>情绪状况</li>
-        <li>他人</li>
-        <li>触发这个坏习惯之前你在做的事</li>
-      </ul>
+      <div class="main" v-dompurify-html="data.content"></div>
       <nav class="post-nav fullwidth kai">
         <span class="nav-prev"
           >←
-          <a
-            href="/cn/2018/06/tufte-rants/"
-            title="https://yihui.org/cn/2018/06/tufte-rants/"
-            >草船借箭</a
-          ></span
+          <a href="#" @click="prevpage" v-if="prevArticle">{{
+            prevArticle.title
+          }}</a></span
         >
         <span class="nav-next"
-          ><a
-            href="/cn/2018/07/lend-me/"
-            title="https://yihui.org/cn/2018/07/lend-me/"
-            >听歌系列之借我</a
-          >
+          ><a href="#" @click="nextpage" v-if="nextArticle">{{
+            nextArticle.title
+          }}</a>
           →</span
         >
       </nav>
+
+      <div class="comment">
+        <Giscus
+          repo="think-crow/blog-creazy_giscus"
+          repo-id="R_kgDOLjB6mg"
+          category="creazy_blog"
+          category-id="DIC_kwDOLjB6ms4CemE6"
+          mapping="title"
+          strict="0"
+          reactions-enabled="1"
+          emit-metadata="1"
+          input-position="bottom"
+          theme="light"
+          lang="zh-CN"
+          loading="eager"
+          crossorigin="anonymous"
+          async
+          :key="componentKey"
+        />
+      </div>
+      <footer class="small"><hr /></footer>
     </div>
-    <footer class="small"><hr /></footer>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import Giscus from "@giscus/vue";
+import { ref, watchEffect } from "vue";
+import axios from "@/api/request.js";
+import { useRoute } from "vue-router";
+const componentKey = ref(0);
+
+const data_Html = ref("");
+const route = useRoute();
+
+const prevArticle = ref("");
+const nextArticle = ref("");
+
+const data = ref([]);
+
+// 存储请求回来的富文本内容
+watch(data, (newvalue) => {
+  componentKey.value++;
+});
+
+const getData = async () => {
+  const response = await axios
+    .get(
+      `/api/article_data?_id=${route.query._id}&category=${route.query.category}`
+    )
+    .then((res) => {
+      data.value = res.data.result;
+      prevArticle.value = res.data.prevArticle;
+      nextArticle.value = res.data.nextArticle;
+      document.title = `${data.value.title} - 十三分地`;
+
+      // 更新页面 URL
+      history.pushState(
+        {},
+        null,
+        `?_id=${route.query._id}&category=${route.query.category}`
+      );
+      // console.log(res.data);
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("get 请求失败，请查看控制台错误信息！");
+    });
+};
+
+function nextpage() {
+  if (nextArticle.value != null) {
+    route.query._id = nextArticle.value._id;
+    getData();
+    scrollToTop();
+  }
+}
+function prevpage() {
+  if (prevArticle.value != null) {
+    route.query._id = prevArticle.value._id;
+    getData();
+    scrollToTop();
+  }
+}
+
+// 到页面顶部
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
+
+// 按键上下页
+function handleKeyDown(event) {
+  // prevArticle.value = null;
+  if (event.key === "ArrowLeft") {
+    prevpage();
+  } else if (event.key === "ArrowRight") {
+    nextpage();
+  }
+}
+
+const formatDate = (timestamp) => {
+  const date = new Date(parseInt(timestamp));
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+onMounted(() => {
+  getData();
+});
+</script>
 
 <style scoped>
-/* @import "/src/assets/styles/xyh_css/style.css"; */
-
-.padding-lr {
+/* .padding-lr {
   padding: 0 2em;
-}
-hr {
+} */
+/* hr {
   border-style: dashed;
   color: var(--border-color);
-  /* margin-bottom: 4em; */
+  margin-bottom: 4em;
+} */
+
+/* ! */
+.shengzi {
+  position: absolute;
+  right: 2em;
+}
+
+.comment {
+  margin-top: 8%;
 }
 .container {
   max-width: var(--body-width);
@@ -171,11 +195,11 @@ hr {
   flex-direction: column;
   counter-reset: pageNumber;
   /* border: 1px solid red; */
-  font-family: Palatino, palatino linotype, palatino lt std, latin modern roman,
-    "source han serif cn", serif;
+  /* font-family: Palatino, palatino linotype, palatino lt std, latin modern roman,
+    "source han serif cn", serif; */
 }
 
-/* header and footer areas */
+/* ! */
 .nav-top,
 .single .meta-line,
 .nav-bottom,
@@ -200,6 +224,8 @@ hr {
   position: absolute;
   top: 2em;
 }
+
+/* ! */
 .menu {
   text-transform: uppercase;
 }
@@ -223,7 +249,7 @@ footer {
 }
 
 /* code */
-pre code {
+/* pre code {
   display: block;
   padding: 1em;
   overflow-x: auto;
@@ -243,13 +269,17 @@ pre code,
 pre code:hover {
   white-space: pre-wrap;
   word-break: break-all;
-}
+} */
 
 /* misc elements */
+.main {
+  margin: 2em 0 2em 0;
+}
+
 .main,
 .home {
   hyphens: auto;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 .main,
 .home,
@@ -297,9 +327,8 @@ sup a {
   font-variant: small-caps;
   text-align: center;
 }
-li {
-  margin: 4px 0;
-}
+
+/* 底部虚线 */
 hr {
   border-style: dashed;
   color: var(--border-color);
@@ -309,52 +338,7 @@ iframe,
 video {
   max-width: 100%;
 }
-#TableOfContents {
-  background-color: var(--bg-block);
-  padding: 0.5em;
-  display: flex;
-  /* justify-content: start; */
-}
-#TableOfContents > ul {
-  margin: 0 3em 0 0;
-}
-#TableOfContents > ul > li > ul li {
-  margin-right: 2em;
-  text-align: start;
-}
-blockquote,
-.toc-list,
-.toc-list ul {
-  border-left: 2px solid var(--border-color);
-  padding-left: 1em;
-}
 
-/* ==== */
-
-ol,
-ul {
-  padding: 0 0 0 20px;
-}
-ol ol {
-  list-style: lower-roman;
-}
-.archive {
-  max-width: none;
-  width: 100%;
-}
-.archive > ul > li {
-  list-style: none;
-}
-.archive > ul > li {
-  display: inline-block;
-  margin-right: 1em;
-}
-/* ==== */
-.single blockquote {
-  background: var(--bg-block);
-  border-left-width: 5px;
-  padding: 3px 1em 3px;
-}
 .post-nav {
   margin-top: 1rem;
 }
@@ -364,60 +348,23 @@ ol ol {
 .post-nav span + span {
   text-align: right;
 }
-table {
-  min-width: 50%;
-  margin: auto;
-  border-top: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
-}
-table thead th {
-  border-bottom: 1px solid var(--border-color);
-}
-th,
-td {
-  padding: 5px;
-}
-thead,
-tfoot,
-tr:nth-child(even),
-code {
-  background: var(--bg-block);
-}
 
-/* metadata */
-.toc-line {
-  display: flex;
-  align-items: flex-end;
-}
-.dots {
-  border-bottom: 2px dotted var(--border-color);
-  margin: 0 0.5em 0.5em;
-  min-width: 10rem;
-  flex-grow: 1;
-}
-.page-num {
-  counter-increment: pageNumber;
-}
-.page-num::before {
-  content: counter(pageNumber);
-}
-.toc-list,
-.toc-list ul {
-  list-style: none;
-  margin-left: 1em;
-}
+/* 标题样式 */
 .toc-line,
 .subtitle,
 .meta-line {
   font-weight: normal;
 }
+/* ! */
 .author + .date::before {
   content: " / ";
 }
-
-.toc-line > a {
-  font-style: italic;
+.article-meta {
+  font-family: Palatino, palatino linotype, palatino lt std, latin modern roman,
+    "source han serif cn", serif;
+  margin-bottom: 0em;
 }
+/* ! */
 h1.title {
   margin: 1em 0 0.5em 0;
 }
@@ -432,6 +379,7 @@ h1.title::before {
   inset: -0.15em 0;
   z-index: -1;
 }
+/* ! */
 .small,
 .term,
 .footnotes,
@@ -442,18 +390,6 @@ li li {
   max-width: 20em;
   margin-left: 0;
 }
-.terms,
-#TableOfContents > ul > li > ul {
-  display: flex;
-  flex-wrap: wrap;
-}
-.terms li,
-.term {
-  margin-left: 2em;
-}
-.term-cat + .term-tag::before {
-  content: " · ";
-}
 
 @media (min-width: 768px) {
   .container {
@@ -461,14 +397,11 @@ li li {
   }
   .main {
     margin: auto;
-    width: var(--text-width);
+    width: 680px;
   }
-  pre,
-  table,
-  .fullwidth {
-    width: calc(min(100vw, var(--body-width)) - 5rem);
-    margin-left: calc(50% + 2.5rem - min(100vw, var(--body-width)) / 2);
-  }
+
+  /* ! */
+
   .crop-h,
   .crop-v,
   .crop-c {
@@ -541,6 +474,7 @@ li li {
     --bg-block: #d6d1cc;
     --border-color: #999;
     --box-shadow: 5px 5px 5px #ccc;
+    --text-width: 620px;
   }
   html,
   img,
@@ -561,34 +495,8 @@ h1.title::before {
   max-width: none;
   width: 100%;
 }
-.archive > ul > li {
-  list-style: none;
-}
-.cn .archive > ul > li {
-  display: inline-block;
-  margin-right: 1em;
-}
-.main h2 {
-  line-height: 1.25;
-}
-.main h1,
-.main h2 {
-  text-align: center;
-  margin: 2em 0 1em;
-}
-dl,
-fieldset {
-  background-color: lightyellow;
-  font-size: 0.9em;
-  border-width: 1px;
-}
-dt,
-legend {
-  font-weight: bold;
-}
-.archive > h2 {
-  text-align: initial;
-}
+
+/* 页底部上下章标题 */
 .main > ul > li > span:first-child,
 .main > p > span:first-child,
 .main > p .subtitle,
@@ -598,12 +506,12 @@ legend {
   color: #666;
   font-size: 0.9em;
 }
-.stats {
-  text-align: right;
+
+.en {
+  border: 1px solid #fff;
+  outline: none; /* 焦点时不显示边框 */
 }
-.cn .post-nav {
-  font-size: initial;
-}
+
 .en .main > p:first-of-type::first-line {
   font-variant: small-caps;
   letter-spacing: 0.05em;
@@ -616,7 +524,7 @@ legend {
   line-height: 1em;
   font-family: cursive;
 }
-blockquote {
+/* blockquote {
   margin: 1em 0;
   padding: 0 2em;
 }
@@ -624,7 +532,7 @@ blockquote {
   background: none;
   border-left-width: 3px;
   padding: 0 2em;
-}
+} */
 .home blockquote,
 .cn blockquote:not(:hover) {
   border-left-color: transparent;
@@ -674,25 +582,12 @@ span.hash-note::before {
   margin-bottom: 0;
 }
 .bg-number,
-.note-ref:has(+ .side:hover) {
-  background: var(--bg-body);
-  filter: invert(1);
-  opacity: 0.6;
-}
 .bg-number {
   padding: 0.1em;
 }
 
 @media only screen and (min-width: 768px) {
-  pre,
-  table {
-    width: auto;
-    max-width: none;
-    margin-left: auto;
-  }
-  .cn #TableOfContents {
-    columns: 2;
-  }
+  /* ! */
   .nav-next {
     border-right: 1px solid;
     padding-right: 1em;
@@ -707,7 +602,6 @@ span.hash-note::before {
   del,
   footer,
   .nav-top,
-  #TableOfContents,
   .comments {
     display: none;
   }

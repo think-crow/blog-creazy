@@ -1,11 +1,18 @@
 <script setup>
-import { onMounted, ref, watchEffect } from "vue";
-import axios from "axios";
+import { onMounted, ref, watchEffect, watch, computed } from "vue";
 // 节流  单位事件只执行一次
 import { throttle } from "lodash-es";
+import Giscus from "@/components/Giscus.vue";
+//v-html防止跨站攻击  dompurify引入失败  vue-html-secure失败  vue-sanitize失败   "vue-dompurify-html"成功 参考：https://www.npmjs.com/package/vue-dompurify-html
+// console.log(import.meta.env.VITE_APP_TITLE);
+import axios from "@/api/request.js";
+
+import { nextTick, getCurrentInstance } from "vue"; // 导入 nextTick 方法
 
 const imageSrc = ref("");
-
+const componentKey = ref(0);
+const { VITE_APP_TITLE } = import.meta.env;
+console.log(VITE_APP_TITLE);
 const page = ref(1);
 const limit = 1;
 const total = ref(0);
@@ -26,7 +33,7 @@ const richTextContent = ref("");
 const postData = async () => {
   const response = await axios
     .get(
-      `http://127.0.0.1:3000/api/bookmovies_data?page=${page.value}&limit=${limit}&category=${category.value}`
+      `/api/bookmovies_data?page=${page.value}&limit=${limit}&category=${category.value}`
     )
     .then((res) => {
       total.value = res.data.total;
@@ -34,13 +41,21 @@ const postData = async () => {
       data.value = res.data.result[0];
       richTextContent.value = data.value.myreflections;
 
-      imageSrc.value = `http://127.0.0.1:3000/${data.value.img_path}`;
+      // console.log(data.value.img_path);
+      imageSrc.value = `/${data.value.img_path}`;
+      document.title = `${data.value.title} - 十三分地`;
     })
     .catch((err) => {
       console.error(err);
-      alert("get 请求失败，请查看控制台错误信息！");
+      alert(err);
     });
 };
+
+// 对动态数据进行处理，防止 XSS 攻击
+
+watch(data, (newvalue) => {
+  componentKey.value++;
+});
 // 按键上下页
 function handleKeyDown(event) {
   if (event.key === "ArrowLeft") {
@@ -53,16 +68,26 @@ function handleKeyDown(event) {
 }
 // 节流
 const throttledHandleKeyDown = throttle(handleKeyDown, 0);
-// 上一页
+// 上一页到1时切换为最后一页
 const prevPage = () => {
   page.value = page.value > 1 ? page.value - 1 : total.value;
   postData();
+  scrollToTop();
 };
-// 下一页
+// 下一页到最后时切换第1页
 const nextPage = () => {
   page.value = page.value * limit < total.value ? page.value + 1 : 1;
   postData();
+  scrollToTop();
 };
+
+// 到页面顶部
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
 
 // 移除分类选择后radio的焦点
 const handleClick = () => {
@@ -82,7 +107,9 @@ const handleClick = () => {
 // };
 
 onMounted(() => {
+  // getBooks();
   postData();
+  // axiosGet();
 });
 </script>
 
@@ -111,13 +138,17 @@ onMounted(() => {
           </div>
         </div>
         <n-divider />
-        <div v-html="richTextContent" class="book-think"></div>
+        <div v-dompurify-html="richTextContent" class="book-think"></div>
       </div>
-    </div>
 
-    <div class="fanye">
-      <n-button @click="prevPage" class="shang">上一章</n-button
-      ><n-button @click="nextPage" class="xia">下一章 </n-button>
+      <div class="fanye">
+        <n-button @click="prevPage" class="shang">上一章</n-button
+        ><n-button @click="nextPage" class="xia">下一章 </n-button>
+      </div>
+
+      <div class="comment">
+        <Giscus :key="componentKey" />
+      </div>
     </div>
   </div>
 </template>
@@ -159,10 +190,10 @@ onMounted(() => {
   width: 100%;
   text-align: center;
   margin-bottom: 20px;
+  font-size: var(calc(2.4 * var(--lem)));
 }
 .book-show {
   display: flex;
-  height: 400px;
 }
 .book-image {
   /* border: 1px solid rgb(251, 114, 1); */
@@ -174,9 +205,9 @@ onMounted(() => {
 }
 .book-text {
   /* border: 1px solid rgb(181, 16, 38); */
-  /* padding: 1em; */
+
   padding: 0 1em;
-  height: 400px;
+
   flex-basis: 460px;
   display: flex;
   align-items: center;
@@ -197,7 +228,7 @@ p {
   white-space: pre-wrap;
   word-break: break-word;
   letter-spacing: 0.1em;
-  line-height: 1.8em;
+  line-height: 1.8em !important;
   margin-bottom: 30px;
   text-align: justify;
 }
@@ -212,6 +243,7 @@ h1 {
   /* border: 1px solid red; */
   float: left;
   padding-top: 1em;
+  width: 100%;
 }
 .fenlei .n-radio {
   /* border: 1px solid red; */
@@ -235,5 +267,111 @@ h1 {
 }
 .xia {
   margin-right: 6em;
+}
+.book-think {
+  white-space: pre-wrap;
+  word-break: break-all;
+  letter-spacing: 0.1em;
+  line-height: 1.8em;
+  /* margin-bottom: 30px; */
+}
+
+.comment {
+  margin-top: 3em;
+}
+
+@media screen and (max-width: 768px) {
+  .books {
+    padding: 30px 5px 5px 5px;
+  }
+  .book-title {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: var(--r-font-xs);
+  }
+  /* 图片+文本 */
+  .book-show {
+    display: block;
+    /* height: 400px; */
+    /* flex-direction: column-reverse; */
+  }
+  .book-image {
+    /* border: 1px solid rgb(251, 114, 1); */
+
+    height: 400px;
+    flex-basis: 460px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* 描述 */
+  .book-text {
+    /* border: 1px solid rgb(181, 16, 38); */
+    padding: 0 0.5em;
+    margin-top: 2em;
+    align-items: center;
+    text-indent: 2em;
+    color: #ffffff9a;
+  }
+
+  /* 文章主体 */
+  p {
+    white-space: pre-wrap;
+    word-break: break-word;
+    letter-spacing: 0.04em;
+    line-height: 1.8em;
+    margin-bottom: 10px;
+    text-align: justify;
+    font-size: var(--r-font-xs);
+  }
+  /* 主体文字 */
+  .book-think {
+    /* border: 1px solid rgb(176, 176, 194); */
+    color: #ffffff9a;
+    padding: 0.5em;
+    white-space: pre-wrap;
+    word-break: break-all;
+    letter-spacing: 0.04em;
+    line-height: 1.6em;
+    font-size: var(--r-font-xs);
+    /* margin-bottom: 30px; */
+  }
+
+  h1 {
+    /* margin-top: 30px; */
+    font-family: "Courier New", Courier, monospace;
+  }
+
+  /* 分类按钮 */
+  .fenlei {
+    /* border: 1px solid red; */
+    float: left;
+    padding-top: 1em;
+    width: 100%;
+  }
+  .fenlei .n-radio {
+    /* border: 1px solid red; */
+    width: 5em;
+    margin-left: 1em;
+    /* margin-bottom: 0; */
+  }
+
+  .fanye {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .fanye .n-button {
+    padding: 1em 1.2em;
+  }
+
+  .shang {
+    margin-left: 1em;
+  }
+  .xia {
+    margin-right: 1em;
+  }
 }
 </style>

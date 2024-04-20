@@ -7,7 +7,7 @@
           src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg"
         />
         <div class="carousel-text">
-          <h1>只有疯狂到认为自己能改变世界的人，才能真正改变世界</h1>
+          <h1>于虚无中寻找自我！</h1>
           <h5>
             The people who are crazy enough to think they can change the world
             are the ones who do.——Apple’s “Think Different” commercial，1997
@@ -65,7 +65,7 @@
     </p>
     <h1>他是谁</h1>
     <p>
-      他今年27岁，零09个月，又13天，毕业于诸葛故地，左道中人，梦想完成十之七八、人生大事只剩挣钱和结婚-加一个的话就是塑造，崇尚自由、疯狂的河南许昌人
+      他今年27岁，零09个月，又13天，毕业于诸葛故地，左道中人，梦想完成十之七八、人生大事只剩挣钱和结婚-加一个的话就是追寻。崇尚自由、疯狂的中原人
     </p>
     <p>
       制作网站原因：四处奔波一个五年之后，在而立之年的这个节点上发现人生仍然碌碌无为，从而应景了一句话：年岁渐长，年岁渐长，
@@ -108,7 +108,7 @@
       <div class="jianyi">
         <div class="jianyi-jianjie">
           <p>
-            Google上搜了更多的个人博客之后！发现自己的行1为是多么幼稚！故-此征集广大建议！希望他以什么方式分享、分享什么或你们想知道什么-都可以在下面可提交！作者会每条认真查看
+            Google上搜了更多的个人博客之后！发现自己的行为是多么幼稚！故-此征集广大建议！希望以什么方式分享、分享什么或你们想分享什么-都可以在下面可提交！作者会每条认真查看
           </p>
         </div>
         <div class="jianyi-text">
@@ -133,40 +133,39 @@
         </div>
       </div>
     </div>
-    <h2>
-      你好陌生人，承蒙遇见，三生有幸，祝你永远年轻，永远热泪盈眶，终身美丽。
-    </h2>
-    <span style="float: right; color: #acb3b9"
-      >———— 相言于：<a
-        href="https://gordonsky.cn/about"
-        style="text-decoration: none; color: #acb3b9"
-        >https://gordonsky.cn/about</a
-      ></span
-    >
+    <div class="xiangyan">
+      <h2>
+        你好陌生人，承蒙遇见，三生有幸，祝你永远年轻，永远热泪盈眶，终身美丽。
+      </h2>
+      <span style="float: right; color: #acb3b9"
+        >———— 相言于：<a
+          href="https://gordonsky.cn/about"
+          style="text-decoration: none; color: #acb3b9"
+          >https://gordonsky.cn/about</a
+        ></span
+      >
+    </div>
 
-    <h1 style="margin-top: 180px">联系他</h1>
+    <h1 class="connect-me">联系他</h1>
     <p>
-      天马行空的想法；疯狂的人；疯狂的事；无论想说什么都可以发邮箱：rhaoshuang@163.com
-      欢迎！
+      天马行空的想法；疯狂的人 疯狂的事；无论想说什么都可以发邮箱：
+      rhaoshuang@163.com 欢迎！
     </p>
   </div>
 
-  <div>
-    <h1>评论</h1>
-    <div style="width: 100%; height: 100px; border: 1px solid red">
-      <p>功能待开发</p>
-    </div>
+  <div class="comment">
+    <Giscus />
   </div>
 </template>
 
 <script setup>
+// import Giscus from "@giscus/vue";
+import Giscus from "@/components/Giscus.vue";
 import axios from "axios";
 import { ref } from "vue";
 // 轮播图箭头图标
 import { ArrowBack, ArrowForward } from "@vicons/ionicons5";
-
 // import { NConfigProvider, NThemeEditor, darkTheme } from "naive-ui";
-
 // 按钮图标        // 这个图标很影响加载速度
 import { IosArrowRoundForward } from "@vicons/ionicons4";
 import { Icon } from "@vicons/utils";
@@ -179,11 +178,16 @@ const value = ref(null);
 const postDataInput = ref("");
 
 const postData = async () => {
+  if (!postDataInput.value.trim()) {
+    alert("兄弟，内容不能为空哈！");
+    return;
+  }
   const data = { jianyi: postDataInput.value };
+
   const response = await axios
-    .post("http://127.0.0.1:3000/api/suggests", data)
+    .post("/api/suggests", data)
     .then((res) => {
-      console.log(postDataInput.value);
+      // console.log(postDataInput.value);
       alert("已提交成功！");
       postDataInput.value = "";
     })
@@ -193,18 +197,19 @@ const postData = async () => {
     });
 };
 
-// const postData = async () => {
-//   const response = await axios
-//     .get("http://127.0.0.1:3000/api/1234")
-//     .then((res) => {
-//       console.log(res.data);
-//       alert("get 请求成功！返回数据：");
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       alert("get 请求失败，请查看控制台错误信息！");
-//     });
+// const getData = async () => {
+//   try {
+//     const response = await axios.get(
+//       "https://api.github.com/repos/think-crow/blog-creazy_giscus"
+//     );
+//     console.log(response.data);
+//   } catch (error) {
+//     console.error(error);
+//     alert("出现错误，麻烦小主留言告知！");
+//   }
 // };
+
+document.title = "主页 - 十三分地";
 </script>
 
 <style scoped>
@@ -227,12 +232,8 @@ const postData = async () => {
   /* z-index: 0; */
 }
 @media screen and (max-width: 768px) {
-  ::v-deep(.n-card__content) {
-    padding: 24px 0;
-  }
-
   .container {
-    padding: 40px;
+    padding: 0.8em;
   }
 }
 
@@ -305,7 +306,6 @@ const postData = async () => {
   bottom: 8%;
   left: 3%; /* 将文字水平居中 */
   /* transform: translateX(-50%); 水平居中文本 */
-
   color: #acb393; /* 设置文字颜色为白色 */
   padding: 10px; /* 设置内边距 */
   width: 70%;
@@ -347,28 +347,41 @@ h1 {
   margin-top: 60px;
 }
 
+.connect-me {
+  /* margin-top: 180px; */
+}
+
+.xiangyan {
+  border: 1px solid transparent;
+  /* clear: both; */
+}
+
 @media screen and (max-width: 768px) {
   p {
     white-space: pre-wrap;
     word-break: break-word;
-    letter-spacing: 0.05em;
-    line-height: 1.8em;
+    letter-spacing: 0.08em;
+    line-height: 1.7em;
     margin-bottom: var(--gqui-mb);
     text-align: justify;
 
     /* border: 0; */
     /* font: inherit; */
-    font-size: 100%;
+    font-size: calc(1.2 * var(--lem));
     /* vertical-align: baseline; */
   }
   h1 {
-    font-size: 1.8em;
+    font-size: 1.4em;
     margin-top: var(--gqui-h2-pt);
     font-weight: 600;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--gqui-mb);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5em;
     color: var(--black);
     word-break: break-word;
+  }
+
+  .connect-me {
+    margin-top: 140px;
   }
 }
 
@@ -464,7 +477,7 @@ li {
   background-color: #373835;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
   .cateImg {
     width: 100%;
     height: 56vw;
@@ -475,10 +488,15 @@ li {
   }
   .cate {
     width: 100%;
-    height: 620px;
+    height: 540px;
   }
   .jianyi {
     left: 0;
+  }
+
+  .xiangyan {
+    clear: both;
+    /* margin-top: 5em; */
   }
 }
 </style>

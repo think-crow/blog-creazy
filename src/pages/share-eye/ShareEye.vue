@@ -1,49 +1,107 @@
 <template>
-  <div class="container">
-    <div class="crop-h"></div>
-    <div class="crop-v"></div>
-    <div class="crop-c"></div>
-    <nav class="nav-top small">
-      <!-- <div class="logo">
+  <div class="shengzi"><Gsap /></div>
+  <div class="en">
+    <div class="container">
+      <div class="crop-h"></div>
+      <div class="crop-v"></div>
+      <div class="crop-c"></div>
+      <nav class="nav-top small">
+        <!-- <div class="logo">
         <a href="#"
           ><img src="/src/assets/images/logo.png" alt="Haoshuang Ren"
         /></a>
       </div> -->
-      <div class="menu">
-        <span><a href="#">分类：</a></span>
-        <span><a href="#">个人日志</a></span>
-        <span><a href="#">技术</a></span>
-        <span><a href="#">优选文章</a></span>
+        <div class="menu">
+          <span><a href="#">分类：</a></span>
+          <span><a href="#" @click="fn_blog">个人日志</a></span>
+          <span><a href="#" @click="fn_reference">技术</a></span>
+          <span><a href="#" @click="fn_goodarticles">优选文章</a></span>
+        </div>
+      </nav>
+      <h1 class="title">归档</h1>
+      <div class="main archive">
+        <h2>2024</h2>
+        <ul>
+          <li v-for="(item, index) in data" :key="index">
+            <span>{{ formatDate(item.submi_date) }}</span>
+            <router-link
+              :to="{
+                path: '/articlecontent',
+                query: {
+                  _id: item._id,
+                  category: category,
+                },
+              }"
+              >{{ item.title }}</router-link
+            >
+          </li>
+        </ul>
       </div>
-    </nav>
-    <h1 class="title">归档</h1>
 
-    <div class="main archive">
-      <h2>2024</h2>
-      <ul>
-        <li>
-          <span>2024-07-10</span>
-          <a href="#">网站建设</a>
-        </li>
-        <li>
-          <span>2024-07-10</span>
-          <a href="#">网站建设</a>
-        </li>
-        <li>
-          <span>2024-07-10</span>
-          <a href="#">网站建设</a>
-        </li>
-      </ul>
+      <footer class="small"><hr /></footer>
     </div>
-
-    <footer class="small"><hr /></footer>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted, ref, watchEffect } from "vue";
+import axios from "@/api/request.js";
+import { RouterLink, RouterView } from "vue-router";
+const data = ref([]);
+
+const category = ref("all");
+
+function fn_blog() {
+  category.value = "blog_1";
+}
+function fn_reference() {
+  category.value = "reference_2";
+}
+function fn_goodarticles() {
+  category.value = "goodarticles_3";
+}
+// 分类
+const stopwatch = watchEffect(() => {
+  if (category.value != "all") {
+    postData();
+  }
+});
+
+const postData = async () => {
+  const response = await axios
+    .get(`/api/article_data?category=${category.value}`)
+    .then((res) => {
+      // console.log(res.data.result);
+      data.value = res.data;
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("get 请求失败，请查看控制台错误信息！");
+    });
+};
+
+const formatDate = (timestamp) => {
+  const date = new Date(parseInt(timestamp));
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+
+  return `${year} ${month}/${day}`;
+};
+
+document.title = "文章 - 十三分地";
+
+onMounted(() => {
+  postData();
+});
+</script>
 
 <style scoped>
-/* @import "/src/assets/styles/xyh_css/style.css"; */
+.shengzi {
+  position: absolute;
+  right: 2em;
+  z-index: 999; 
+}
 
 .padding-lr {
   padding: 0 2em;
@@ -53,11 +111,18 @@ hr {
   color: var(--border-color);
   /* margin-bottom: 4em; */
 }
+
+.en {
+  border: 1px solid #fff;
+  outline: none; /* 焦点时不显示边框 */
+}
+
 .container {
   max-width: var(--body-width);
   min-height: calc(100vh - 3em);
   /* background-color: var(--bg-body); */
-  margin: auto;
+
+  margin: 0;
   padding: 1em;
   line-height: 1.5;
   position: relative;
@@ -94,6 +159,7 @@ hr {
 }
 .menu {
   text-transform: uppercase;
+  /* border: 1px solid red; */
 }
 .menu span {
   display: inline-block;
@@ -164,6 +230,7 @@ a {
 .main a {
   padding: 0 0.6em 0 0.3em;
 }
+/* 支持鼠标悬停和精确指针的设备，初logo之外的所有a链接向右下方偏移1px */
 @media (hover: hover) and (pointer: fine) {
   :not(.logo) > a:hover {
     position: relative;
@@ -398,7 +465,7 @@ li li {
     columns: 2;
   }
 }
-
+/* 大于等于992px才生效 */
 @media only screen and (min-width: 992px) {
   .container {
     min-height: calc(100vh - 5em);

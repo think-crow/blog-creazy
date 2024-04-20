@@ -26,23 +26,59 @@
   -theme-color-rgb: 94, 186, 125;
   --primary-rgb: 94, 186, 125;
 
-  --photo-gird-color:#3b3939;
+  --photo-gird-color: #3b3939;
 
   --n-bezier: cubic-bezier(.4, 0, .2, 1);
 
-  
+
+  /* 从新定义 =================================================20240406*/
+
+  /* 背景颜色 */
+  --r-bg-main: #18181c;
+  /*主体背景色*/
+  --r-bg-content: #20211e;
+  /*container背景色*/
+  --r-bg-input: #373835;
+  /*输入框背景色*/
+
+  /* 字体颜色 D1表示透明度 00-ff透明-不透明*/
+  --r-text-color: #ffffffD1;
+  --r-title-color: #ffffffD1;
+  /* 次要颜色-主标题下面的描述 */
+  --r-secondary-color: #acb3b9;
+
+
+  /* 字体大小 xs小  md中   lg大 */
+  --r-font-xs: calc(1.2 * var(--lem));
+  --r-font-md: calc(2.4 * var(--lem));
+  --r-font-lg: 1.4em;
+
+  /* 间距 */
+  --r-space-xs: calc(0.25em + 4px);
+  --r-space-md: calc(0.5em + 8px);
+  --r-space-lg: calc(1em + 16px);
+
+  /* 行高 */
+  --r-lineh-compact: 1.3;
+  --r-lineh-normal: 1.6;
+  --r-lineh-loose: 1.2;
+
+  /* 断点 */
+  --r-size-xs: 768px;
+
+
+
+
 
 
 }
 
-:root{
-  box-sizing:border-box;
+:root {
+  box-sizing: border-box;
   /* font-size:calc(0.5em+1vw); */
 }
 
 ::before,
-::after{
-  box-sizing:inherit；
+::after {
+  box-sizing: inherit；
 }
-
-

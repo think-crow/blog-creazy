@@ -10,7 +10,9 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+document.title = "相簿 - 十三分地";
+</script>
 
 <style scoped>
 html,
@@ -39,7 +41,7 @@ body {
   font-family: miranafont, Hiragino Sans GB, STXihei, Microsoft YaHei, SimSun,
     sans-serif;
   margin: 0 auto;
-  border: 1px solid red;
+  border: 1px solid rgba(255, 0, 0, 0.634);
   text-align: center;
   margin-top: 10%;
   font-size: 16px;
@@ -47,5 +49,11 @@ body {
 }
 .gaozhi p {
   font-size: calc(1.2em + 1vw);
+}
+
+@media screen and (max-width: 768px) {
+  .gaozhi p {
+    font-size: calc(1.4 * var(--lem));
+  }
 }
 </style>

@@ -7,240 +7,139 @@
       :placement="placement"
       :style="
         placement === 'left' || placement === 'right'
-          ? { height: '100%' }
+          ? { height: '50%' }
           : undefined
       "
-      size="large"
+      :size="size"
     >
       <!-- 工具收集---------------------------------------怕找不到 -->
       <n-tab-pane name="oasis" tab="工具收集"
         ><div class="container">
-          <n-card title="软件">
-            <template #header-extra>
-              <n-input v-model:value="value" type="text" placeholder="搜索" />
+          <n-card>
+            <h2 class="font-title">软件</h2>
+            <!-- <template #header-extra>
+              <n-input
+                v-model:value="value"
+                type="text"
+                placeholder="搜索功能暂未开发"
+              />
               <n-button
                 ><Icon size="24"><IosSearch /></Icon
               ></n-button>
-            </template>
-            <n-table :bordered="false" :single-line="false" size="large">
+            </template> -->
+            <n-table :bordered="false" :single-line="false" :size="size">
               <thead>
                 <tr>
-                  <th>排序</th>
+                  <th class="r-default">排序</th>
                   <th>工具名字</th>
                   <th>描述</th>
-                  <th>下载量</th>
+
                   <th>下载</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Typora破解版</td>
-                  <td>
-                    Typora 一款Markdown 编辑器和阅读器Typora 一款Markdown
-                    编辑器和阅读器Typora 一款Markdown 编辑器和阅读器
-                  </td>
-                  <td>148</td>
-                  <td><n-button>下载</n-button></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Typora破解版</td>
-                  <td>
-                    Typora 一款Markdown 编辑器和阅读器Typora 一款Markdown
-                    编辑器和阅读器Typora 一款Markdown 编辑器和阅读器
-                  </td>
-                  <td>148</td>
-                  <td><n-button size="large">下载</n-button></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Typora破解版</td>
-                  <td>
-                    Typora 一款Markdown 编辑器和阅读器Typora 一款Markdown
-                    编辑器和阅读器Typora 一款Markdown 编辑器和阅读器
-                  </td>
-                  <td>148</td>
-                  <td><n-button>下载</n-button></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Typora破解版</td>
-                  <td>
-                    Typora 一款Markdown 编辑器和阅读器Typora 一款Markdown
-                    编辑器和阅读器Typora 一款Markdown 编辑器和阅读器
-                  </td>
-                  <td>148</td>
-                  <td><n-button>下载</n-button></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Typora破解版</td>
-                  <td>
-                    Typora 一款Markdown 编辑器和阅读器Typora 一款Markdown
-                    编辑器和阅读器Typora 一款Markdown 编辑器和阅读器
-                  </td>
-                  <td>148</td>
-                  <td><n-button>下载</n-button></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Typora破解版</td>
-                  <td>
-                    Typora 一款Markdown 编辑器和阅读器Typora 一款Markdown
-                    编辑器和阅读器Typora 一款Markdown 编辑器和阅读器
-                  </td>
-                  <td>148</td>
-                  <td><n-button>下载</n-button></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Typora破解版</td>
-                  <td>
-                    Typora 一款Markdown 编辑器和阅读器Typora 一款Markdown
-                    编辑器和阅读器Typora 一款Markdown 编辑器和阅读器
-                  </td>
-                  <td>148</td>
-                  <td><n-button>下载</n-button></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Typora破解版</td>
-                  <td>
-                    Typora 一款Markdown 编辑器和阅读器Typora 一款Markdown
-                    编辑器和阅读器Typora 一款Markdown 编辑器和阅读器
-                  </td>
-                  <td>148</td>
-                  <td><n-button>下载</n-button></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Typora破解版</td>
-                  <td>
-                    Typora 一款Markdown 编辑器和阅读器Typora 一款Markdown
-                    编辑器和阅读器Typora 一款Markdown 编辑器和阅读器
-                  </td>
-                  <td>148</td>
-                  <td><n-button>下载</n-button></td>
+                <!-- 这里处理不了获取数据的异步更新，暂时搁置 -->
+                <tr v-for="(item, index) in data.tools" :key="index">
+                  <td class="r-default">{{ index }}</td>
+                  <td>{{ item.title }}</td>
+                  <td>{{ item.description }}</td>
+
+                  <td><a :href="item.url" target="_blank">下载</a></td>
                 </tr>
               </tbody>
             </n-table>
+            <p style="padding: 1em">
+              备注：上述所有软件都在Gitee上存储，此处仅保存为下载链接！
+            </p>
           </n-card>
 
-          <div class="fenye">
+          <!-- <div class="fenye">
             <n-pagination v-model:page="page" :page-count="100" />
-          </div>
+          </div> -->
         </div>
       </n-tab-pane>
       <!-- 其它链接---------------------------------------怕找不到 -->
       <n-tab-pane name="the beatles" tab="其它链接">
         <div class="container">
-          <n-card title="个人blog" class="tuijian-blog"
-            ><ul>
-              <li>
-                <a href="https://gxzv.com/" target="_blank">甘小蔗</a>
-                <p>：暗黑风格的网站，参考了他不少内容</p>
+          <n-card class="tuijian-blog">
+            <h2 class="font-title">个人站点推荐：</h2>
+            <ul>
+              <li v-for="(item, index) in data.bolg" :key="index">
+                <p class="miaoshu">
+                  <a :href="item.url" target="_blank">{{ item.name }}:</a>
+                  {{ item.description }}
+                </p>
               </li>
-              <li>
-                <a href="https://yihui.org/">谢益辉</a>
-                <p>：学历很高、网站界面舒适、很多文章挺有见解</p>
-              </li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li></ul
-          ></n-card>
-          <n-card title="工具网站" class="card-margin">
+            </ul></n-card
+          >
+          <n-card class="card-margin">
+            <h2 class="font-title">其他网站：</h2>
             <div class="gongju-link-box">
-              <h3>前端</h3>
-              <n-table :bordered="true" :single-line="false">
-                <tbody>
-                  <tr>
-                    <td>
-                      <a href="">W3Cschool</a>
-                      <p>：初学者指南</p>
-                    </td>
-                    <td>
-                      <a href="">CSS</a>
-                      <p>：这个还没有发现</p>
-                    </td>
-                    <td><a href="">JavaScript</a></td>
-                    <td><a href="">Vue3</a></td>
-                  </tr>
-                </tbody>
-              </n-table>
-              <h3>图片</h3>
-              <n-table :bordered="true" :single-line="false">
-                <tbody>
-                  <tr>
-                    <td>
-                      <a href="">W3Cschool</a>
-                      <p>：初学者指南</p>
-                    </td>
-                    <td>CSS</td>
-                    <td>JavaScript</td>
-                    <td>...</td>
-                  </tr>
-                </tbody>
-              </n-table>
+              <!-- <h3>前端</h3> -->
+              <div class="outher-link">
+                <a href="#">哈哈</a><a href="#">哈哈</a><a href="#">哈哈</a>
+              </div>
             </div>
           </n-card>
         </div>
       </n-tab-pane>
+      <!-- <n-tab-pane name="jay chou" tab="关于本站"></n-tab-pane> -->
       <!-- 关于本站---------------------------------------怕找不到 -->
       <n-tab-pane name="jay chou" tab="关于本站" class="about-me-main">
         <div class="about-me">
           <h1>初衷</h1>
           <p>
-            深情似海，问相逢初度②，是何年纪？依约而今还记取③，不是前生夙世④。放学花前，题诗石上，春水园亭里。逢君一笑，人间无此欢喜⑤。
-            无奈苍狗看云⑥，红羊数劫⑦，惘惘休提起！客气渐多真气少⑧，汩没心灵何已⑨？千古声名，百年担负，事事违初意。心头阁住⑩，儿时那种情味。
+            以此经历帮助更多曾经像自己一样的人！核心价值观：偏狂，正向，博纳，奋进，追寻！
           </p>
           <h1>规划</h1>
           <p>
-            1、文章模块、模拟未来模块后续完善！个人空间划分出来！<br />
-            2、待本博客成熟后、规划一套通用版本！包含：个性修改、完整部署视频、代码注释-看能否商用
+            1、人物志、模拟未来模块后续完善！个人空间划分出来！<br />
+            <!-- 2、待本博客成熟后、规划一套通用版本！包含：个性修改、完整部署视频、代码注释-看能否商用，（2属于个人规划！） -->
+            2、收集建议、迭代2.0版本
           </p>
-          <p></p>
+
           <h1>技术栈</h1>
           <p>
-            前端：HTML、CSS、JS、Vue3、axios、Naive-ui、Element-ui!<br />
-            后台：啊噢！后台还没写，不过会用到：node.js、Express、<br />
+            前端：HTML、CSS、JS、Vue3、Axios、Naive-ui、Element-ui、Giscus!<br />
+            后台：Node.js、Express、Mongodb、Cors、WangEditor<br />
+            本站开发日志：<a href="">前端日志</a>、 <a href="">后端日志</a>
+            <br />
+            向老歪大哥、甘小蔗致谢！ <br />
             向开源致敬！
           </p>
+
           <h1>关于作者</h1>
-          <p>前序：所有书籍、和个性化网站都有神化效果！请以平常心浏览！</p>
-          <h>他的想法：</h>
           <p>
-            1、掌握入门编程语言很重要<br />
-            2、英文很重要：它能赋予我们英文阅读和交流的能力！！！！！！这个为自己未来的一个目标（解释：有人说现在各种翻译工具软件代替了学习英语：这就好比你到哪里都要背个包，用的话还要打开，成年累月会耽误多长时间不可想象！原著的阅读能传达很多思想，翻译只是机器理解！这也是自己小时候的一个梦想，从高三把高中英语单词背了六遍开始！！）
+            <br />
+
+            一个毕业五六年的乡村青年，19岁前，没出过县城！他的转折点 -
+            大学，所以很感谢自己的母校！都都往往、停停前前、最终，回归到起点的位置！好像什么都没有变，好像又有些变：
+            执念完成了七七八八、人生好像又零零散散！站在即将奔三的岔路口，开始分析自己的问题；对于金钱的概念，一直信奉着未来的自己一定不会拘泥于这些东西，也不会被其左右；
+            到了眼前：~到用时方恨少（~：any）！
+            发现被其左右的不是货币、而是曾经的我们自己，飘飘浮浮从未沉沉淀淀！以此为起点，希望都能找到我们的方向、和目标！
           </p>
           <p><a href="">查看详细简历</a></p>
           <h1></h1>
+          <p>终序：所有书籍、和个性化网站都有神化效果！请以平常心浏览！</p>
         </div>
-        <div class="contact-me" ref="scrollContainer">
+        <div class="contact-me">
           <n-card
             ><h3>1、联系站主</h3>
             <p>邮箱：rhaoshuang@163.com</p>
 
             <p>GitHub：think-crow</p>
             <h3>2、建站请联系博主微信：</h3>
-            <p>微信：believe-me</p>
-            <h3>3、有任何建议或界面显示问题，请点击下面提交：</h3>
-            <div class="jianyi-text">
+            <p>微信：net-rwany</p>
+            <h3>网站</h3>
+            <p>版本:v1.0 日期:2024年4月19日</p>
+            <!-- <div>
               <n-space vertical>
-                <n-input
-                  v-model:value="value"
-                  type="textarea"
-                  placeholder="Go-Go-Go!..."
-                />
+                <n-input type="textarea" placeholder="Go-Go!..." />
               </n-space>
               <n-button style="float: right; margin-top: 0.5em">
                 提交
               </n-button>
-            </div>
+            </div> -->
           </n-card>
         </div>
       </n-tab-pane>
@@ -249,39 +148,65 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { Icon } from "@vicons/utils";
 import { IosSearch } from "@vicons/ionicons4";
-// 标签页
-const placement = ref(null);
+import { ref, onMounted, onUnmounted, watchEffect, toRefs } from "vue";
+import axios from "axios";
+
+const placement = ref(null); // 标签页
+const size = ref("large"); // 标签页
 const type = ref("bar");
-// 输入框
-const value = ref(null);
-// 分页
-const page = ref(2);
+const value = ref(null); // 输入框
+const page = ref(2); // 分页
+
+// watchEffect(() => {
+//   console.log(data.value?.tools);
+// });
+const data = reactive({
+  tools: [],
+  bolg: [],
+});
+const postData = async () => {
+  const response = await axios
+    .get(`/api/links`)
+    .then((res) => {
+      const { tools, bolg } = res.data;
+      // 更新 data 对象的属性值
+      Object.assign(data, { tools, bolg });
+      // console.log(data);
+    })
+    .catch((err) => {
+      // console.error(err);
+      alert("get 请求失败，请查看控制台错误信息！");
+    });
+};
+// console.log(data.value);
+onMounted(async () => {
+  postData();
+});
 
 const handleResize = () => {
   if (window.matchMedia("(max-width: 564px)").matches) {
     placement.value = "top";
+    size.value = "small";
+    type.value = "card";
   } else {
     placement.value = "left";
   }
 };
-
 // 监听窗口尺寸变化
 window.addEventListener("resize", handleResize);
-
 // 监听窗口尺寸变化并设置 placement 值
 watchEffect(() => {
   handleResize();
 });
-
 // 在组件卸载时移除事件监听
 onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
 });
-
 // 页面跟着滚轮
+
+document.title = "发现 - 十三分地";
 </script>
 
 <style scoped>
@@ -292,12 +217,10 @@ onUnmounted(() => {
 /* <!-- 工具收集---------------------------------------怕找不到 --> */
 .container {
   margin: 0 1em;
-  /* height: 100%; */
-  /* font-size: ; */
 }
 .n-card {
   height: 100%;
-  max-width: 99%;
+  /* max-width: 99%; */
 }
 
 .n-input {
@@ -313,10 +236,15 @@ onUnmounted(() => {
   /* border: 1px solid red; */
 }
 
-/* transition: top .2s var(--n-bezier), max-height .2s var(--n-bezier), background-color .3s var(--n-bezier);
---n-bezier: cubic-bezier(.4, 0, .2, 1); */
-
 /* <!-- 其他链接---------------------------------------怕找不到 --> */
+.font-title {
+  margin: 1em 0 0.4em 1em;
+}
+.miaoshu {
+  /* border: 1px solid red; */
+  /* letter-spacing: 0em; */
+}
+
 a,
 p {
   font-family: Palatino, palatino linotype, palatino lt std, latin modern roman,
@@ -335,6 +263,7 @@ a {
   border-bottom: 1px dashed;
   color: #f1f1f1;
   font-size: calc(0.55rem + 0.7vw);
+  /* border: 1px solid red; */
 }
 p {
   white-space: pre-wrap;
@@ -347,15 +276,35 @@ p {
   font-size: calc(0.6em + 0.7vw);
 }
 
-.tuijian-blog ul {
-  margin: 0 auto;
-  /* border: 1px solid red; */
-  width: 700px;
+.font-title > p {
+  letter-spacing: 0em;
 }
-
+.tuijian-blog ul {
+  /* margin: 0 auto; */
+  /* border: 1px solid red; */
+  display: flex;
+  /* width: 700px; */
+  /* justify-content: flex-start; */
+  flex-wrap: wrap;
+  padding: 0 2em 1em 2em;
+  list-style: none;
+}
 .tuijian-blog ul li {
   margin: 0.5em 0;
+  width: calc(50% - 1em);
   /* border: 1px solid red; */
+}
+
+/* 选中奇数位置的 li 元素 */
+.tuijian-blog ul li:nth-child(odd) {
+  align-self: flex-start; /* 奇数位置的 li 左边对齐为第一列 */
+  border-top: 1px solid rgba(255, 0, 0, 0.422);
+}
+
+/* 选中偶数位置的 li 元素 */
+.tuijian-blog ul li:nth-child(even) {
+  margin-left: 2em; /* 设置偶数位置 li 左边距离第一列的距离 */
+  border-top: 1px solid rgba(255, 0, 0, 0.403);
 }
 
 .gongju-link-box {
@@ -375,13 +324,15 @@ p {
   width: 30%;
   /* height: 100%; */
   /* border: 1px solid red; */
-  padding: 2em 1em 1em 1em;
+  padding: 2em 1em 0em 1em;
 }
 
 .contact-me .n-card {
-  height: 50%;
-  padding: 0.5em 1.2em;
+  height: 51%;
+
+  padding: 0.5em 1.2em 0em 1.2em;
   box-shadow: 0 0 2px;
+  /* border: 1px solid red; */
 }
 h1,
 h3 {
@@ -390,5 +341,57 @@ h3 {
 
 .about-me h1:first-child {
   margin-top: 0;
+}
+
+@media screen and (max-width: 768px) {
+  /* <!-- 工具收集---------------------------------------怕找不到 --> */
+  .container {
+    margin: 0 0.8em;
+  }
+  .container .n-card {
+    border: none;
+    border-bottom: 1px solid rgba(165, 157, 157, 0.256);
+  }
+  .r-default {
+    display: none;
+  }
+  .font-title {
+    font-size: calc(1.6 * var(--lem));
+    margin: 0.2em 0 0em 0.8em;
+  }
+  .n-table {
+    font-size: calc(1 * var(--lem));
+  }
+  /* <!-- 其他链接---------------------------------------怕找不到 --> */
+  .gongju-link-box {
+    margin: 0 1em;
+    margin-bottom: 1.5em;
+  }
+
+  .gongju-link-box h3 {
+    display: none;
+  }
+  .card-margin {
+    margin-top: 1em;
+  }
+
+  /* <!-- 关于本站---------------------------------------怕找不到 --> */
+  .contact-me {
+    display: none;
+  }
+
+  .about-me {
+    padding: 1em 1.6em;
+    width: 100%;
+    /* border: 1px solid red; */
+  }
+
+  .about-me h1 {
+    font-size: calc(2 * var(--lem));
+  }
+}
+
+.outher-link a {
+  margin-right: 1em;
 }
 </style>
