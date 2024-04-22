@@ -13,6 +13,7 @@
       </div>
     </div>
   </div>
+  1
 </template>
 
 <script setup>
@@ -21,10 +22,21 @@ import { ref, defineProps } from "vue";
 
 const router = useRouter();
 
+const activeIndex = ref(0);
+
+const setActive = (index) => {
+  index = 0;
+  activeIndex.value = index;
+  localStorage.setItem("activeIndex", index.toString());
+};
+
 const goToFramework = (id) => {
   if (id === 1) router.push("/LifeStory");
   if (id === 2) router.push("/ShareEye");
-  if (id === 3) router.push("/LifeI");
+  if (id === 3) {
+    router.push("/LifeI");
+    setActive();
+  }
   if (id === 4) router.push("/DesignOurLife");
 };
 

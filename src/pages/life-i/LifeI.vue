@@ -125,22 +125,29 @@
           <template #footer>
             <div class="footer-content">
               <div class="footer-section">
-                <h3>域名信息</h3>
-                <p>www.rwany.net</p>
+                <p>域名信息:www.rwany.net</p>
               </div>
               <div class="footer-section">
-                <h3>备案号</h3>
-                <p>豫ICP备12345678号</p>
+                <p>
+                  <a
+                    href="https://beian.miit.gov.cn "
+                    target="_blank"
+                    class="ssfd"
+                    >豫ICP备2024063533号</a
+                  >
+                </p>
               </div>
               <div class="footer-section">
-                <h3>法律及版权声明</h3>
-                <p>版权所有 © 2024 您的公司名称</p>
-                <p>未经许可，不得转载</p>
+                <p>
+                  版权所有 © 2024 十三分地 <br />
+                  未经许可，不得转载
+                </p>
               </div>
               <div class="footer-section">
-                <h3>联系方式</h3>
-                <p>联系电话：010-12345678</p>
-                <p>邮箱：rwany.net@gmail.com</p>
+                <p>
+                  联系电话：010-12345678 <br />
+                  邮箱：rwany.net@gmail.com
+                </p>
               </div>
             </div>
           </template>
@@ -158,13 +165,12 @@ import { darkTheme } from "naive-ui";
 // import { ElConfigProvider, ElThemeEditor } from "element-plus";
 // ,
 // import { NConfigProvider, NThemeEditor } from "naive-ui";
-// 轮播图
-// 调整主题变量
 
-const activeIndex = ref(0);
+const activeIndex = ref(parseInt(localStorage.getItem("activeIndex")) || 0);
 
 const setActive = (index) => {
   activeIndex.value = index;
+  localStorage.setItem("activeIndex", index.toString());
 };
 </script>
 
@@ -324,10 +330,18 @@ footer {
   text-align: center;
 }
 
+.ssfd {
+  text-decoration: none;
+  color: #ffffffd1;
+  font-weight: 100;
+}
+
 .footer-content {
   display: flex;
   justify-content: space-around;
   /* border-top: 1px solid hsl(210, 8%, 70%); */
+  /* margin-top: 3em; */
+  margin-bottom: 4em;
 }
 
 .footer-section {

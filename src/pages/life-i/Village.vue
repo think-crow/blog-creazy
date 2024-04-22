@@ -8,7 +8,7 @@
       <p>是一 个人的记忆、也是一代人的记忆！</p>
     </div>
     <div class="haha">
-      <iframe src="/public/index.html" class="iframe1"></iframe>
+      <iframe src="../../../public/xuanwo.html" class="iframe1"></iframe>
     </div>
   </div>
   <div class="zhaichao"><h1>上述来源：Ctrl+C+V大法！</h1></div>
