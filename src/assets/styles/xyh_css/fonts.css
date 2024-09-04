@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Source Han Serif CN';
+  src: local('Source Han Serif CN'), local('Source Han Serif SC'),
+       local('Source Han Serif TC'), local('Source Han Serif TW'),
+       local('Source Han Serif'), local('Noto Serif CJK SC'), local('Songti SC'), local('SimSong'),
+       url('/src/assets/fonts/AR-PL-KaitiM-GB.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'FandolKai';
+  src: local('Kaiti'), local('Kaiti SC'), local('STKaiti'), local('楷体'), local('SimKai'), local('AR PL KaitiM GB'), local('DFKai-SB'), local('FandolKai'),
+       url('/src/assets/fonts/AR-PL-KaitiM-GB.woff2') format('woff2');
+}
+

@@ -1,0 +1,36 @@
+{
+  "name": "blod_creazy",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host=0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@giscus/vue": "^3.0.0",
+    "@vicons/ionicons5": "^0.12.0",
+    "@vueuse/shared": "^10.9.0",
+    "axios": "^1.6.8",
+    "element-plus": "^2.6.1",
+    "gsap": "^3.12.5",
+    "naive-ui": "^2.38.1",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.19",
+    "vue-dompurify-html": "^5.0.1",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@vicons/fluent": "^0.12.0",
+    "@vicons/ionicons4": "^0.12.0",
+    "@vicons/utils": "^0.1.4",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "sass": "^1.75.0",
+    "sass-loader": "^14.2.0",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
+    "vfonts": "^0.0.3",
+    "vite": "^5.1.4"
+  }
+}
