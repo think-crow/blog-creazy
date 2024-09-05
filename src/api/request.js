@@ -29,7 +29,11 @@
 // 2\请求拦截器-
 axios.interceptors.request.use((config)=>{
 	const {loading, setLoading} = useLoadingStore()
-	setLoading(true)
+	  // 只在不是 /ligs 路径时显示加载动画
+	  if (!config.url.includes('/api/notepapers_data')) {
+        setLoading(true);
+    }
+
 	// if(config.method=="post"){
 
 	// 	config.data=querystring.stringify(config.data)

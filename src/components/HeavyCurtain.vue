@@ -1,17 +1,18 @@
 <template >
-  <a v-if="!hasShown" @click="handleClick" style="position:absolute; font-size: 1.8em;color: initial;">Logo：这个放哪呢、</a>
-  <div class="container">
-    <div class="light">
-      
-      <div class="light1">
-        <a @click="goToFramework(1)" > >/人物志</a>
-        <a @click="goToFramework(2)">>/文章</a>
+  <div>
+    <a v-if="!hasShown" @click="handleClick" style="position:absolute; font-size: 1.8em; color: initial;">Logo：这个放哪呢、</a>
+    <div class="container">
+      <div class="light">
+        <div class="light1">
+          <a @click="goToFramework(1)">>/人物志</a>
+          <a @click="goToFramework(2)">>/文章</a>
+        </div>
       </div>
-    </div>
-    <div class="dark">
-      <div class="dark1">
-        <a @click="goToFramework(3)"> >/个人小屋</a>
-        <a @click="goToFramework(4)"> >/未来</a>
+      <div class="dark">
+        <div class="dark1">
+          <a @click="goToFramework(3)">>/个人小屋</a>
+          <a @click="goToFramework(4)">>/未来</a>
+        </div>
       </div>
     </div>
   </div>
@@ -208,6 +209,26 @@ a:hover {
   border-bottom-color: #fff; /* 鼠标经过时显示下边框颜色 */
   color: rgba(255, 0, 0, 0.642);
 }
+
+
+
+/* 为 .light1 下的第一个 a 和 .dark1 下的第二个 a 设置颜色 */
+/* .light1 a:first-of-type {
+color: #b0b0b0; 
+  text-decoration: none; 
+}
+
+.dark1 a:last-of-type {
+  color: #b0b0b0; 
+  text-decoration: none; 
+} */
+
+/* 去掉这些菜单项的 hover 效果 */
+/* .light1 a:first-of-type:hover,
+.dark1 a:last-of-type:hover {
+  border-bottom-color: transparent;
+  color: #b0b0b0; 
+} */
 @media screen and (max-width: 768px) {
 }
 </style>

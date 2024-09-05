@@ -18,7 +18,6 @@ import LifeStory from "../pages/life-story/LifeStory.vue";
 import ShareEye from "../pages/share-eye/ShareEye.vue";
 import ArticleContent from "../pages/share-eye/ArticleContent.vue";
 
-import HeavyCurtain from "../components/HeavyCurtain.vue";
 import NotFound from "../pages/404/NotFound.vue";
 
 
@@ -84,11 +83,6 @@ const router = createRouter({
       path:'/articlecontent',
       name:"Articlecontent",
       component:ArticleContent,
-    },
-    {
-      path:'/heavycurtain',
-      name:"heavycurtain",
-      component:HeavyCurtain,
     },
     { path: '/:pathMatch(.*)*', component: NotFound },
   ],

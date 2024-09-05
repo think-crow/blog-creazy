@@ -158,7 +158,7 @@
                 </div>
               </div>
               <div class="footer-section">
-                <p>邮箱：rwany.net@gmail.com</p>
+                <p>邮箱：rhaoshuang@163.com</p>
               </div>
             </div>
           </template>

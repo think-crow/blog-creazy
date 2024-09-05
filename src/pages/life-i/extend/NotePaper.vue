@@ -8,6 +8,11 @@
           v-html="item.content.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;')"
         ></p></div
     ></n-card>
+     <!-- Loading animation -->
+     <div v-if="loading" class="gsc-loading">
+      <div class="gsc-loading-image"></div>
+      <div class="gsc-loading-text">Loading . . .</div>
+    </div>
   </div>
 </template>
 
@@ -21,9 +26,11 @@ const limit = 27; // 每页限制数
 const total = ref(0); // 总数据条数
 const data = ref([]); // 数据列表
 const category = ref("all"); // 分类
+const loading = ref(false); // Track loading state
 
 // 获取数据的函数
 const fetchData = async () => {
+  loading.value = true; // Show loader
   try {
     const response = await axios.get("/api/notepapers_data", {
       params: {
@@ -39,6 +46,8 @@ const fetchData = async () => {
   } catch (error) {
     console.error("数据获取失败:", error);
     alert("数据获取失败，请检查控制台错误信息。");
+  } finally {
+    loading.value = false; // Hide loader
   }
 };
 
@@ -140,6 +149,32 @@ p {
 
 .submitdate {
   color: rgba(169, 164, 157, 0.658);
+}
+
+
+.gsc-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; /* gap-4 */
+  margin-top: 1.5%;
+}
+
+.gsc-loading-image {
+  width: 3rem; /* w-12 */
+  height: 3rem; /* h-12 */
+  background-image: url("../../../../public/mona-loading-default.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.gsc-loading-text {
+  font-size: 0.875rem; /* text-sm */
+  white-space: nowrap;
+  text-align: center;
+  width: 100%;
+  color:#ffffff85;
+  /* font-weight: 400; */
 }
 
 @media screen and (max-width: 768px) {

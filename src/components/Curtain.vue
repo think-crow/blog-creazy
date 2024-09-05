@@ -2,7 +2,7 @@
   <div ref="container" @click="startAnimation">
     <div
       class="first-eyes"
-      :class="{  'your-extra-class': isShown1 }"
+      :class="{ 'your-extra-class': isShown1 }"
     >
       <div class="article">
         <div class="preface">
@@ -32,42 +32,38 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import { ref, onBeforeUnmount  } from "vue";
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-const router = useRouter();
-// const isShown = ref(false);
 const container = ref(null);
-const initialIsShown1 = localStorage.getItem('isShown1') ? JSON.parse(localStorage.getItem('isShown1')) : false;
+const initialIsShown1 = sessionStorage.getItem('isShown1') ? JSON.parse(sessionStorage.getItem('isShown1')) : false;
 const isShown1 = ref(initialIsShown1);
 
-// 如果 localStorage 中没有 isShown1，则将其设置为 false
-if (!localStorage.getItem('isShown1')) {
-  localStorage.setItem('isShown1', JSON.stringify(false));
+// 如果 sessionStorage 中没有 isShown1，则将其设置为 false
+if (!sessionStorage.getItem('isShown1')) {
+  sessionStorage.setItem('isShown1', JSON.stringify(false));
 }
 
-// 开始动画并更新 localStorage
+// 开始动画并更新 sessionStorage
 function startAnimation() {
   isShown1.value = true;
 
-  // 更新 localStorage 中的值为 true
-  localStorage.setItem('isShown1', JSON.stringify(isShown1.value));
+  // 更新 sessionStorage 中的值为 true
+  sessionStorage.setItem('isShown1', JSON.stringify(isShown1.value));
 }
 
 // 在组件加载完成后，延迟三秒执行 startAnimation()
 onMounted(() => {
   setTimeout(() => {
     startAnimation();
-  }, 6000);
+  }, 3000);
 });
-//window.onunload 事件会在页面或浏览器窗口被关闭时触发，包括刷新页面、点击链接跳转到其他页面以及关闭浏览器窗口等情况。使用该事件时，可以确保在用户离开页面时执行相应的清理操作。
 
-//window.onbeforeunload 事件则会在用户尝试离开当前页面时触发，例如关闭浏览器窗口、刷新页面或者导航到其他网页时。这个事件通常用于提示用户是否确定要离开当前页面，因此在这个事件中执行的代码会在提示框弹出前执行，但并不会阻止页面的卸载过程。
 // 使用 onBeforeUnmount 钩子，在页面即将销毁时执行清除操作
-window.onbeforeunload = function() {
-  localStorage.removeItem('isShown1');
-};
+// onBeforeUnmount(() => {
+//   sessionStorage.removeItem('isShown1');
+// });
 </script>
+
 
 <style scoped>
 * {

@@ -93,7 +93,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container">
+  <div>
+    <div class="container">
     <div class="tou">
       <h1 class="tou-title">Poetry-铁血柔情</h1>
       <n-radio-group v-model:value="category" name="radiogroup1" class="fenlei">
@@ -138,6 +139,7 @@ onMounted(() => {
   <div class="comment">
     <Giscus />
   </div>
+  </div>
 </template>
 
 <style scoped>
@@ -177,7 +179,7 @@ onMounted(() => {
 .mycontainer {
   display: grid;
     grid-template-columns: repeat(auto-fill, minmax(618px, 1fr)); /* 自动填充列数，最小200px，自动扩展 */
-    gap: 1.8%; /* 项目之间的间隙 */
+    gap: 20px; /* 项目之间的间隙 */
     justify-items: center; /* 每个项目在网格单元格内居中对齐 */
     margin: 0 auto;
     padding: 10px;
@@ -204,6 +206,7 @@ onMounted(() => {
 .poetry-box-shang {
   display: flex;
   /* width: 100%; */
+  min-height: 50%;
   /* border: 1px solid red; */
 }
 
@@ -294,7 +297,7 @@ span {
     box-shadow: 0 0 5px;
     width: 98%;
     padding: 1em 0.5em 0.5em 0.5em;
-    margin: 1em 0;
+    margin: .3em 0;
   }
   .n-card:nth-child(4n + 3),
   .n-card:nth-child(4n + 4) {

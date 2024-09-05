@@ -1,4 +1,5 @@
 <template>
+ <div>
   <div class="container">
     <div class="xushu">
       <h1>拾忆</h1>
@@ -15,6 +16,7 @@
     </div>
   </div>
   <div class="zhaichao"><h1>上述来源：Ctrl+C+V大法！</h1></div>
+ </div>
 </template>
 
 <script setup>
