@@ -1,6 +1,8 @@
 <template>
   <div class="en" tabindex="0" @keydown="handleKeyDown">
-    <div class="shengzi"><Gsap /></div>
+    <div class="shengzi">
+      <Gsap />
+    </div>
     <div class="container">
       <div class="crop-h"></div>
       <div class="crop-v"></div>
@@ -14,13 +16,9 @@
         <div class="menu">
           <span><a href="#"></a></span>
           <!-- <span><a href="#">个人日志</a></span> -->
-          <router-link
-            :to="{
-              path: '/Shareeye',
-            }"
-            style="color: red"
-            >&返回列表</router-link
-          >
+          <router-link :to="{
+    path: '/Shareeye',
+  }" style="color: red">&返回列表</router-link>
           <!-- <span><a href="#">技术</a></span>
         <span><a href="#">优选文章</a></span> -->
         </div>
@@ -38,112 +36,105 @@
 
       <div class="main" v-dompurify-html="data.content"></div>
       <nav class="post-nav fullwidth kai">
-        <span class="nav-prev"
-          >←
+        <span class="nav-prev">←
           <a href="#" @click="prevpage" v-if="prevArticle">{{
-            prevArticle.title
-          }}</a></span
-        >
-        <span class="nav-next"
-          ><a href="#" @click="nextpage" v-if="nextArticle">{{
-            nextArticle.title
-          }}</a>
-          →</span
-        >
+    prevArticle.title
+  }}</a></span>
+        <span class="nav-next"><a href="#" @click="nextpage" v-if="nextArticle">
+            {{
+    nextArticle.title
+  }}</a>
+          →</span>
       </nav>
 
       <div class="comment">
-        <Giscus
-          repo="think-crow/blog-creazy_giscus"
-          repo-id="R_kgDOLjB6mg"
-          category="creazy_blog"
-          category-id="DIC_kwDOLjB6ms4CemE6"
-          mapping="url"
-          reactions-enabled="1"
-          emit-metadata="0"
-          input-position="bottom"
-          theme="light"
-          lang="zh-CN"
-          loading="eager"
-          crossorigin="anonymous"
-          data-strict="1"
-          async
-          :key="componentKey"
-        />
+        <Giscus repo="think-crow/blog-creazy_giscus" repo-id="R_kgDOLjB6mg" category="creazy_blog"
+          category-id="DIC_kwDOLjB6ms4CemE6" mapping="url" reactions-enabled="1" emit-metadata="0"
+          input-position="bottom" theme="light" lang="zh-CN" loading="eager" crossorigin="anonymous" data-strict="1"
+          async :key="componentKey" />
       </div>
-      <footer class="small"><hr /></footer>
+      <footer class="small">
+        <hr />
+      </footer>
     </div>
   </div>
 </template>
 
 <script setup>
 import Giscus from "@giscus/vue";
-import { ref, watchEffect } from "vue";
+import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
 import axios from "@/api/request.js";
-import { useRoute } from "vue-router";
-const componentKey = ref(0);
+import { useRoute, useRouter } from "vue-router";
 
-const data_Html = ref("");
-const route = useRoute();
-
+const data = ref({});
 const prevArticle = ref("");
 const nextArticle = ref("");
 
-const data = ref([]);
+const route = useRoute();
+const router = useRouter();
 
-// 存储请求回来的富文本内容
-watch(data, (newvalue) => {
-  componentKey.value++;
-});
+const getDataFromServer = async (id, category) => {
+  try {
+    const response = await axios.get(`/api/article_data?_id=${id}&category=${category}`);
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    alert("获取数据失败，请查看控制台错误信息！");
+    return null;
+  }
+};
 
 const getData = async () => {
-  const response = await axios
-    .get(
-      `/api/article_data?_id=${route.query._id}&category=${route.query.category}`
-    )
-    .then((res) => {
-      data.value = res.data.result;
-      prevArticle.value = res.data.nextArticle;
-      nextArticle.value = res.data.prevArticle;
-      document.title = `${data.value.title} - 十三分地`;
+  const id = route.query._id;
+  const category = route.query.category;
 
-      // 更新页面 URL
-      history.pushState(
-        {},
-        null,
-        `?_id=${route.query._id}&category=${route.query.category}`
-      );
-      // console.log(res.data);
-    })
-    .catch((err) => {
-      console.error(err);
-      alert("get 请求失败，请查看控制台错误信息！");
-    });
+  // 检查 sessionStorage
+  const cachedData = sessionStorage.getItem(`article_${id}`);
+  if (cachedData) {
+    const { result, prevArticle: prev, nextArticle: next } = JSON.parse(cachedData);
+    data.value = result;
+    prevArticle.value = prev;
+    nextArticle.value = next;
+    document.title = `${data.value.title} - 十三分地`;
+    return;
+  }
+
+  // 如果 sessionStorage 中没有数据，则从服务器获取
+  const serverData = await getDataFromServer(id, category);
+  if (serverData) {
+    const { result, prevArticle: prev, nextArticle: next } = serverData;
+    data.value = result;
+    prevArticle.value = prev;
+    nextArticle.value = next;
+    document.title = `${data.value.title} - 十三分地`;
+
+    // 保存到 sessionStorage
+    sessionStorage.setItem(`article_${id}`, JSON.stringify({ result, prevArticle: prev, nextArticle: next }));
+  }
+};
+
+const navigate = async (article) => {
+  if (article) {
+    router.push({ query: { _id: article._id, category: route.query.category } });
+    await getData();
+    await nextTick();
+    scrollToTop();
+  }
 };
 
 function nextpage() {
-  if (nextArticle.value != null) {
-    route.query._id = nextArticle.value._id;
-    getData();
-    scrollToTop();
-  }
-}
-function prevpage() {
-  if (prevArticle.value != null) {
-    route.query._id = prevArticle.value._id;
-    getData();
-    scrollToTop();
-  }
+  navigate(nextArticle.value);
 }
 
-// 到页面顶部
+function prevpage() {
+  navigate(prevArticle.value);
+}
+
 function scrollToTop() {
   window.scrollTo(0, 0);
 }
 
-// 按键上下页
 function handleKeyDown(event) {
-  // prevArticle.value = null;
   if (event.key === "ArrowLeft") {
     prevpage();
   } else if (event.key === "ArrowRight") {
@@ -159,9 +150,17 @@ const formatDate = (timestamp) => {
   return `${year}-${month}-${day}`;
 };
 
+watch(() => route.query, getData, { immediate: true });
+
 onMounted(() => {
   getData();
+  window.addEventListener('keydown', handleKeyDown);
 });
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown);
+});
+
 </script>
 
 <style scoped>
@@ -184,6 +183,7 @@ onMounted(() => {
 .comment {
   margin-top: 8%;
 }
+
 .container {
   max-width: var(--body-width);
   min-height: calc(100vh - 3em);
@@ -208,17 +208,21 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
 }
-.home + footer > .nav-bottom {
+
+.home+footer>.nav-bottom {
   display: block;
 }
+
 .nav-top {
   margin-bottom: 1em;
   border-bottom: 1px solid;
 }
+
 .logo {
   font-weight: bold;
   margin-top: 0.5rem;
 }
+
 .logo img {
   display: none;
   max-height: 4rem;
@@ -230,22 +234,27 @@ onMounted(() => {
 .menu {
   text-transform: uppercase;
 }
+
 .menu span {
   display: inline-block;
   margin: 0.5rem 0 0 0.5em;
 }
+
 .menu .active {
   border-bottom: 5px solid;
   margin-bottom: -5px;
 }
+
 .menu .optional {
   display: none;
 }
+
 footer {
   text-align: center;
   margin-top: 2rem;
 }
-.menu-bottom a + a::before {
+
+.menu-bottom a+a::before {
   content: " · ";
 }
 
@@ -282,6 +291,7 @@ pre code:hover {
   hyphens: auto;
   /* border: 1px solid blue; */
 }
+
 .main,
 .home,
 .terms {
@@ -291,39 +301,48 @@ pre code:hover {
 .main h2 {
   line-height: 1.25;
 }
+
 .main h1 {
   text-align: center;
   margin: 2em 0 1em;
 }
+
 a {
   text-decoration: none;
   /* border-bottom: 1px dashed; */
   color: initial;
 }
+
 .main a {
   padding: 0 0.6em 0 0.3em;
 }
+
 @media (hover: hover) and (pointer: fine) {
-  :not(.logo) > a:hover {
+  :not(.logo)>a:hover {
     position: relative;
     inset: 1px 0 0 1px;
   }
 }
+
 nav a,
 footer a,
 .archive a,
 sup a {
   border-bottom: none;
 }
+
 .anchor {
   display: none;
 }
-:hover > .anchor {
+
+:hover>.anchor {
   display: inline;
 }
+
 .single .main h2 {
   border-bottom: 1px solid var(--border-color);
 }
+
 .single .main h3 {
   font-variant: small-caps;
   text-align: center;
@@ -334,6 +353,7 @@ hr {
   border-style: dashed;
   color: var(--border-color);
 }
+
 img,
 iframe,
 video {
@@ -343,10 +363,12 @@ video {
 .post-nav {
   margin-top: 1rem;
 }
+
 .post-nav span {
   width: calc(50% - 1em);
 }
-.post-nav span + span {
+
+.post-nav span+span {
   text-align: right;
 }
 
@@ -356,19 +378,23 @@ video {
 .meta-line {
   font-weight: normal;
 }
+
 /* ! */
-.author + .date::before {
+.author+.date::before {
   content: " / ";
 }
+
 .article-meta {
   font-family: Palatino, palatino linotype, palatino lt std, latin modern roman,
     "source han serif cn", serif;
   margin-bottom: 0em;
 }
+
 /* ! */
 h1.title {
   margin: 1em 0 0.5em 0;
 }
+
 h1.title::before {
   content: "❧";
   font-style: normal;
@@ -380,6 +406,7 @@ h1.title::before {
   inset: -0.15em 0;
   z-index: -1;
 }
+
 /* ! */
 .small,
 .term,
@@ -387,7 +414,8 @@ h1.title::before {
 li li {
   font-size: 0.9em;
 }
-.footnotes > hr {
+
+.footnotes>hr {
   max-width: 20em;
   margin-left: 0;
 }
@@ -396,6 +424,7 @@ li li {
   .container {
     padding: 3.5em 2.5em;
   }
+
   .main {
     margin: auto;
     width: 680px;
@@ -411,34 +440,42 @@ li li {
 
     /* ====== */
   }
+
   .crop-h {
     inset: 2em 0;
     border-top: 1px solid;
     border-bottom: 1px solid;
   }
+
   .crop-v {
     inset: 0 2em;
     border-left: 1px solid;
     border-right: 1px solid;
   }
+
   .crop-c {
     inset: 1em;
     border: 1.5em solid var(--bg-body);
   }
+
   .menu {
     margin-left: 2em;
   }
+
   .menu span {
     margin-left: 1em;
   }
+
   h1.title::before {
     font-size: 6em;
     inset: 0;
   }
+
   .logo img,
   .menu .optional {
     display: inline-block;
   }
+
   .twocolumn {
     columns: 2;
   }
@@ -450,19 +487,24 @@ li li {
     margin: 2em auto;
     max-width: 960px;
   }
+
   .home {
     padding: 0 2em;
   }
+
   h1.title {
     margin-top: 2em;
   }
+
   h1.title::before {
     font-size: 9em;
     inset: -0.1em 0;
   }
+
   pre code {
     white-space: pre;
   }
+
   .crop-c {
     inset: 1em;
     border: 1.5em solid var(--bg-body);
@@ -477,6 +519,7 @@ li li {
     --box-shadow: 5px 5px 5px #ccc;
     --text-width: 620px;
   }
+
   html,
   img,
   video,
@@ -489,18 +532,20 @@ li li {
 h1.title::before {
   content: "➶";
 }
+
 .main {
   line-height: 1.75;
 }
+
 .archive {
   max-width: none;
   width: 100%;
 }
 
 /* 页底部上下章标题 */
-.main > ul > li > span:first-child,
-.main > p > span:first-child,
-.main > p .subtitle,
+.main>ul>li>span:first-child,
+.main>p>span:first-child,
+.main>p .subtitle,
 .hash-note,
 .post-nav,
 .stats {
@@ -510,21 +555,24 @@ h1.title::before {
 
 .en {
   border: 1px solid #fff;
-  outline: none; /* 焦点时不显示边框 */
+  outline: none;
+  /* 焦点时不显示边框 */
 }
 
-.en .main > p:first-of-type::first-line {
+.en .main>p:first-of-type::first-line {
   font-variant: small-caps;
   letter-spacing: 0.05em;
   font-size: 1.1em;
 }
-.en .main > p:first-of-type::first-letter {
+
+.en .main>p:first-of-type::first-letter {
   font-size: 3em;
   padding: 0.1em 0.1em 0 0;
   float: left;
   line-height: 1em;
   font-family: cursive;
 }
+
 /* blockquote {
   margin: 1em 0;
   padding: 0 2em;
@@ -538,61 +586,77 @@ h1.title::before {
 .cn blockquote:not(:hover) {
   border-left-color: transparent;
 }
+
 ol,
 ul {
   padding: 0 0 0 20px;
 }
+
 ol ol {
   list-style: lower-roman;
 }
+
 code[class="fullwidth"] {
   background: none;
 }
+
 .comments {
   margin-top: 1em;
 }
+
 .cn del {
   background-color: #444;
 }
+
 .cn del:hover {
   background-color: inherit;
   text-decoration: inherit;
 }
+
 .hash-note,
 .side {
   background: lightyellow;
 }
+
 .hash-note a {
   color: inherit;
 }
+
 /* 注释 */
 span.hash-note::before {
   content: "　# ";
 }
+
 .hide-notes .hash-note,
 .unlist {
   display: none !important;
 }
+
 .side {
   padding: 1em 2em;
 }
-.side > p:first-child {
+
+.side>p:first-child {
   margin-top: 0;
 }
-.side > p:last-child {
+
+.side>p:last-child {
   margin-bottom: 0;
 }
+
 .bg-number,
 .bg-number {
   padding: 0.1em;
 }
 
 @media only screen and (min-width: 768px) {
+
   /* ! */
   .nav-next {
     border-right: 1px solid;
     padding-right: 1em;
   }
+
   .nav-prev {
     border-left: 1px solid;
     padding-left: 1em;
@@ -600,6 +664,7 @@ span.hash-note::before {
 }
 
 @media print {
+
   del,
   footer,
   .nav-top,
@@ -609,10 +674,12 @@ span.hash-note::before {
 }
 
 @media only screen and (min-width: 992px) {
+
   .has-sidenotes .main,
   .has-sidenotes .fullwidth {
     margin-left: 0;
   }
+
   .side-right {
     float: right;
     clear: right;
@@ -621,10 +688,9 @@ span.hash-note::before {
     width: calc(var(--body-width) - var(--text-width) - 2.5rem * 2 - 2rem);
     margin-right: calc(var(--text-width) + 2.5rem * 2 - var(--body-width));
   }
+
   blockquote .side-right {
-    margin-right: calc(
-      var(--text-width) + 2.5rem * 2 - var(--body-width) - 2rem
-    );
+    margin-right: calc(var(--text-width) + 2.5rem * 2 - var(--body-width) - 2rem);
   }
 }
 </style>
