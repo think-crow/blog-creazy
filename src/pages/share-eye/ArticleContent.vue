@@ -48,10 +48,19 @@
       </nav>
 
       <div class="comment">
-        <Giscus repo="think-crow/blog-creazy_giscus" repo-id="R_kgDOLjB6mg" category="creazy_blog"
-          category-id="DIC_kwDOLjB6ms4CemE6" mapping="url" reactions-enabled="1" emit-metadata="0"
-          input-position="bottom" theme="light" lang="zh-CN" loading="eager" crossorigin="anonymous" data-strict="1"
-          async :key="componentKey" />
+        <Giscus repo="think-crow/blog-creazy_giscus" 
+        repo-id="R_kgDOLjB6mg" 
+        category="creazy_blog"
+          category-id="DIC_kwDOLjB6ms4CemE6" 
+          mapping="url" 
+          reactions-enabled="1" 
+          emit-metadata="0"
+          input-position="bottom" 
+          theme="light" lang="zh-CN" 
+          loading="eager" 
+          crossorigin="anonymous" 
+          data-strict="1"
+          async/>
       </div>
       <footer class="small">
         <hr />
@@ -154,11 +163,11 @@ watch(() => route.query, getData, { immediate: true });
 
 onMounted(() => {
   getData();
-  window.addEventListener('keydown', handleKeyDown);
+  // window.addEventListener('keydown', handleKeyDown);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeyDown);
+  // window.removeEventListener('keydown', handleKeyDown);
 });
 
 </script>
