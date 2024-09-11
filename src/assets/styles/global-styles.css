@@ -23,7 +23,7 @@
   /* 文章p标签大小 */
   --gqui-mb: 24px;
 
-  -theme-color-rgb: 94, 186, 125;
+  --theme-color-rgb: 94, 186, 125;
   --primary-rgb: 94, 186, 125;
 
   --photo-gird-color: #3b3939;

@@ -83,6 +83,7 @@ const route = useRoute();
 const router = useRouter();
 
 const getDataFromServer = async (id, category) => {
+  // console.log("观察调用次数");
   try {
     const response = await axios.get(`/api/article_data?_id=${id}&category=${category}`);
     return response.data;
@@ -161,14 +162,14 @@ const formatDate = (timestamp) => {
 
 watch(() => route.query, getData, { immediate: true });
 
-onMounted(() => {
-  getData();
-  // window.addEventListener('keydown', handleKeyDown);
-});
+// onMounted(() => {
+//   getData();
+//   // window.addEventListener('keydown', handleKeyDown);
+// });
 
-onUnmounted(() => {
-  // window.removeEventListener('keydown', handleKeyDown);
-});
+// onUnmounted(() => {
+//   // window.removeEventListener('keydown', handleKeyDown);
+// });
 
 </script>
 

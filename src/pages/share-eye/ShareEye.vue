@@ -20,7 +20,7 @@
               <ul v-for="(monthData, monthIndex) in yearData.months" :key="monthIndex">
                  <!-- <h3>{{ monthData.month }}月</h3> -->
                 <li v-for="(item, index) in monthData.articles" :key="index">
-                  <span>{{ formatDate(item.submi_date) }}</span>
+                  <span style=" color: #666">{{ formatDate(item.submi_date) }}</span>
                   <router-link
                     :to="{
                       path: '/articlecontent',
@@ -352,6 +352,7 @@ ol ol {
 }
 .post-nav span {
   width: calc(50% - 1em);
+ 
 }
 .post-nav span + span {
   text-align: right;
