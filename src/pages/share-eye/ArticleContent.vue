@@ -37,10 +37,10 @@
       <div class="main" v-dompurify-html="data.content"></div>
       <nav class="post-nav fullwidth kai">
         <span class="nav-prev">←
-          <a href="#" @click="prevpage" v-if="prevArticle">{{
+          <a href="#" @click="prevpage($event)" v-if="prevArticle">{{
     prevArticle.title
   }}</a></span>
-        <span class="nav-next"><a href="#" @click="nextpage" v-if="nextArticle">
+        <span class="nav-next"><a href="#" @click="nextpage($event)" v-if="nextArticle">
             {{
     nextArticle.title
   }}</a>
@@ -132,11 +132,13 @@ const navigate = async (article) => {
   }
 };
 
-function nextpage() {
+function nextpage(event) {  
+  event.preventDefault(); // 防止默认行为
   navigate(nextArticle.value);
 }
 
-function prevpage() {
+function prevpage(event) {
+  event.preventDefault(); // 防止默认行为
   navigate(prevArticle.value);
 }
 
@@ -146,9 +148,9 @@ function scrollToTop() {
 
 function handleKeyDown(event) {
   if (event.key === "ArrowLeft") {
-    prevpage();
+    prevpage(event);
   } else if (event.key === "ArrowRight") {
-    nextpage();
+    nextpage(event);
   }
 }
 

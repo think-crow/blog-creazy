@@ -42,10 +42,12 @@ const router = createRouter({
         {
           path: "talks",
           component: Talks,
+          props: route => ({ page: parseInt(route.query.page) || 1, category: route.query.category || 'all' })
         },
         {
           path: "poetry",
           component: Poetry,
+          props: route => ({ page: parseInt(route.query.page) || 1, category: route.query.category || 'all' })
         },
         {
           path: "village",

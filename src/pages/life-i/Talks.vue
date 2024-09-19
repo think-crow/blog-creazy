@@ -23,7 +23,7 @@
       </n-collapse>
 
       <n-space justify="center">
-        <n-pagination v-model="page" :page-count="totalPages" />
+        <n-pagination v-model:page="page" :page-count="totalPages" />
       </n-space>
     </n-card>
     <div class="comment">
@@ -38,13 +38,16 @@ import Giscus from "@/components/Giscus.vue";
 import axios from "@/api/request.js";
 // 节流  单位事件只执行一次
 import { throttle } from "lodash-es";
+import { useRouter, useRoute } from 'vue-router';
+const router = useRouter();
+const route = useRoute();
 
-const page = ref(1); //当前页
+const page = ref(parseInt(route.query.page) || 1);
 const limit = 27; //每次请求多少条---纪念自己的27岁
 const total = ref(0); //总页数
 const data = ref([]);
 // 分类
-const category = ref("all");
+const category = ref(route.query.category || 'all'); // 分类
 
 // 计算总页数
 const totalPages = computed(() => {
@@ -55,6 +58,26 @@ watch(page, () => {
   postData();
 });
 
+
+// 监听路由查询参数变化
+watch(() => route.query.page, (newPage) => {
+  const parsedPage = parseInt(newPage) || 1;
+  if (page.value !== parsedPage) {
+    page.value = parsedPage;
+    postData();
+  }
+});
+
+
+// 更新路由参数
+const updateRoute = () => {
+  // 只在有实际查询参数时才更新路由
+  if (page.value !== 1 || category.value !== 'all') {
+    const newQuery = { page: page.value, category: category.value };
+    router.push({ query: newQuery });
+  }
+};
+
 const postData = async () => {
   const response = await axios
     .get(
@@ -64,6 +87,8 @@ const postData = async () => {
       total.value = res.data.total;
       if (page > total) page = 1;
       data.value = res.data.result;
+      updateRoute(); // 更新路由
+      scrollToTop();
     })
     .catch((err) => {
       console.error(err);
@@ -105,6 +130,15 @@ const handleClick = () => {
     });
   }
 };
+
+// 到页面顶部
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+};
+
 
 const formatDate = (timestamp) => {
   const date = new Date(parseInt(timestamp));

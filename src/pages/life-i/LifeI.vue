@@ -174,6 +174,10 @@
 import { ref } from "vue";
 // 暗亮主题切换
 import { darkTheme } from "naive-ui";
+import { useRoute } from 'vue-router';
+
+// 获取当前路由
+const route = useRoute();
 // import { ElConfigProvider, ElThemeEditor } from "element-plus";
 // ,
 // import { NConfigProvider, NThemeEditor } from "naive-ui";
@@ -184,6 +188,22 @@ const setActive = (index) => {
   activeIndex.value = index;
   localStorage.setItem("activeIndex", index.toString());
 };
+
+// 监听路由变化以同步 activeIndex
+watch(() => route.path, (newPath) => {
+  const pathToIndex = {
+    '/lifei/aboutlifei': 0,
+    '/lifei/books': 1,
+    '/lifei/poetry': 2,
+    '/lifei/talks': 3,
+    '/lifei/photoalbum': 4,
+    '/lifei/notepaper': 5,
+    '/lifei/discover': 6,
+    '/lifei/village': 7,
+  };
+  
+  activeIndex.value = pathToIndex[newPath] || 0;
+});
 </script>
 
 <style scoped>

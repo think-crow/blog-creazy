@@ -4,91 +4,140 @@ import Giscus from "@/components/Giscus.vue";
 import axios from "@/api/request.js";
 // 节流  单位事件只执行一次
 import { throttle } from "lodash-es";
+import { useRouter, useRoute } from 'vue-router';
 
-const page = ref(1); //当前页
-const limit = 8; //每次请求多少条
-const total = ref(0); //总页数
-const data = ref([]);
-// 分类
-const category = ref("all");
+const router = useRouter();
+const route = useRoute();
 
-// 分类
-const stopwatch = watchEffect(() => {
-  if (category.value != "all") {
-    postData();
-  }
-  // stopwatch();
-});
-// 分类
+const page = ref(parseInt(route.query.page) || 1);
+const limit = 8; // 每次请求多少条
+const total = ref(0); // 总数据量
+const data = ref([]); // 存储数据
+const category = ref(route.query.category || 'all'); // 分类
+
 // 计算总页数
 const totalPages = computed(() => {
-  return total.value > 0 ? Math.ceil(total.value / limit) : 1; // 如果总页数小于等于0，则至少显示一页
+  return total.value > 0 ? Math.ceil(total.value / limit) : 1;
 });
+
 // 监听当前页变化
 watch(page, () => {
   postData();
 });
 
-const postData = async () => {
-  const response = await axios
-    .get(
-      `/api/poetry_data?page=${page.value}&limit=${limit}&category=${category.value}`
-    )
-    .then((res) => {
-      total.value = res.data.total;
-      if (page > total) page = 1;
-      data.value = res.data.result;
-    })
-    .catch((err) => {
-      // console.error(err);
-      alert("get 请求失败，请查看控制台错误信息！");
-    });
+// 监听分类变化
+watch(category, () => {
+  postData();
+});
+
+// 监听路由查询参数变化
+watch(() => route.query.page, (newPage) => {
+  const parsedPage = parseInt(newPage) || 1;
+  if (page.value !== parsedPage) {
+    page.value = parsedPage;
+    postData();
+  }
+});
+
+watch(() => route.query.category, (newCategory) => {
+  if (category.value !== newCategory) {
+    category.value = newCategory || 'all';
+    postData();
+  }
+});
+
+
+// 更新路由参数
+const updateRoute = () => {
+  // 只在有实际查询参数时才更新路由
+  if (page.value !== 1 || category.value !== 'all') {
+    const newQuery = { page: page.value, category: category.value };
+    router.push({ query: newQuery });
+  }
 };
 
-// 按键上下页
-function handleKeyDown(event) {
-  if (event.key === "ArrowLeft") {
-    prevPage();
-  } else if (event.key === "ArrowRight") {
-    nextPage();
+// 请求数据
+const postData = async () => {
+  try {
+    const response = await axios.get('/api/poetry_data', {
+      params: {
+        page: page.value,
+        limit: limit,
+        category: category.value
+      }
+    });
+    total.value = response.data.total;
+    if (page.value > totalPages.value) page.value = 1;
+    data.value = response.data.result;
+    updateRoute(); // 更新路由
+    scrollToTop();
+  } catch (err) {
+    alert('请求失败，请查看控制台错误信息！');
   }
-}
-// 节流
-const throttledHandleKeyDown = throttle(handleKeyDown, 0);
+};
+
 // 上一页到1时切换为最后一页
 const prevPage = () => {
   page.value = page.value > 1 ? page.value - 1 : totalPages.value;
   postData();
   scrollToTop();
 };
+
 // 下一页到最后时切换第1页
 const nextPage = () => {
   page.value = page.value * limit < total.value ? page.value + 1 : 1;
   postData();
   scrollToTop();
 };
+
 // 到页面顶部
-function scrollToTop() {
+const scrollToTop = () => {
   window.scrollTo({
     top: 0,
-    behavior: "smooth",
+    behavior: 'smooth'
   });
-}
+};
+
 // 移除分类选择后radio的焦点
 const handleClick = () => {
-  const targetElement = document.querySelector(".mycontainer");
+  const targetElement = document.querySelector('.mycontainer');
   if (targetElement) {
     targetElement.focus();
     window.scroll({
       top: 0,
       left: 0,
-      behavior: "instant", // 立即跳转，而非平滑滚动
+      behavior: 'instant'
     });
   }
 };
-document.title = "诗歌 - 十三分地";
+
+document.title = '诗歌 - 十三分地';
+
 onMounted(() => {
   postData();
+});
+
+// 按键上下页
+function handleKeyDown(event) {
+  // console.log(`Key pressed : ${event.key}`); // 调试日志
+  if (event.key === 'ArrowLeft') {
+    // console.log('Prev page called'); // 调试日志
+    prevPage();
+  } else if (event.key === 'ArrowRight') {
+    // console.log('Next page called'); // 调试日志
+    nextPage();
+  }
+}
+
+// 节流
+const throttledHandleKeyDown = throttle(handleKeyDown, 200);
+// window.addEventListener('keydown', throttledHandleKeyDown);
+
+
+
+// 清理事件监听
+onUnmounted(() => {
+  window.removeEventListener('keydown', throttledHandleKeyDown);
 });
 </script>
 
