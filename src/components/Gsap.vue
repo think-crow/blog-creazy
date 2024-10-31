@@ -18,7 +18,7 @@ const toggleAnimation = () => {
     .to(rope.value, { y: 0, duration: 0.4 })
     .then(() => {
       // 动画完成后跳转到根路由
-      router.push("/");
+      router.push("/newpageview");
     });
 };
 

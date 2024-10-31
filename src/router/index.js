@@ -27,7 +27,8 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      component: NewPageView,
+      component: LifeI,
+      redirect:'/lifei/aboutlifei',
     },
     {
       path: "/lifei",
@@ -85,6 +86,11 @@ const router = createRouter({
       path:'/articlecontent',
       name:"Articlecontent",
       component:ArticleContent,
+    },
+    {
+      path:'/newpageview',
+      name:"NewPageView",
+      component:NewPageView,
     },
     { path: '/:pathMatch(.*)*', component: NotFound },
   ],
