@@ -3,10 +3,7 @@
     <div>
       <n-carousel show-arrow autoplay:false>
         <div>
-          <img
-            class="carousel-img"
-            src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg"
-          />
+          <img class="carousel-img" src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg" />
           <div class="carousel-text">
             <h1>于虚无中寻找自我！</h1>
             <h5>
@@ -16,20 +13,14 @@
           </div>
         </div>
         <div>
-          <img
-            class="carousel-img"
-            src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg"
-          />
+          <img class="carousel-img" src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg" />
           <div class="carousel-text">
             <h1>一定要记住: 就算我们是平凡人，也可以活的很精彩！</h1>
             <h5>Wish you a happy life!</h5>
           </div>
         </div>
         <div>
-          <img
-            class="carousel-img"
-            src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
-          />
+          <img class="carousel-img" src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg" />
           <div class="carousel-text">
             <h1>良好的生活习惯是自信的来源！</h1>
             <h5>Good lifestyle habits are the source of confidence!</h5>
@@ -38,21 +29,21 @@
         <template #arrow="{ prev, next }">
           <div class="custom-arrow">
             <button type="button" class="custom-arrow--left" @click="prev">
-              <n-icon><ArrowBack /></n-icon>
+              <n-icon>
+                <ArrowBack />
+              </n-icon>
             </button>
             <button type="button" class="custom-arrow--right" @click="next">
-              <n-icon><ArrowForward /></n-icon>
+              <n-icon>
+                <ArrowForward />
+              </n-icon>
             </button>
           </div>
         </template>
         <template #dots="{ total, currentIndex, to }">
           <ul class="custom-dots">
-            <li
-              v-for="index of total"
-              :key="index"
-              :class="{ ['is-active']: currentIndex === index - 1 }"
-              @click="to(index - 1)"
-            />
+            <li v-for="index of total" :key="index" :class="{ ['is-active']: currentIndex === index - 1 }"
+              @click="to(index - 1)" />
           </ul>
         </template>
       </n-carousel>
@@ -63,15 +54,30 @@
       </p>
       <h1>他是谁</h1>
       <p>
-        他叫任豪爽，今年28岁，毕业于南阳，左道中人，梦想完成十之七八、人生大事只剩挣钱和结婚-加一个的话就是追寻。崇尚偏门偏道、自命平凡的许昌人！
+        任豪爽（1996年4月19日——）字豪爽，笔名子任亦或二十八书生！河南许昌人，伟大的虚无主义空想者，伟大的无产阶级探索家、模仿家、中华人民共和国互联网网站“十三分地”的主要缔造者和维护者。
       </p>
+      <!-- <p>
+        早年就读于乡县中小学，2017年参加工作，2018年大学毕业、参军，2020年9月退伍，同年10月于郑州工作，2021年5月离职，同年10月换岗，23年6月辞职，至今待业。
+      </p> -->
       <p>
         制作网站原因：四处奔波一个五年之后，在而立之年的这个节点上发现人生仍然碌碌无为，从而应景了一句话：年岁渐长，年岁渐长，
-        而立之年，年至而立，不见长！他想以此经历，给千千万万个曾经自己一样的人一个引领，不至于局限于市井生活中、举步不前！<strong
-          >希望能给你们有所帮助</strong
-        >
+        而立之年，年至而立，不见长！他想以此经历，给千千万万个曾经自己一样的人一个引领，不至于局限于市井生活中、举步不前！<strong>希望能给你们有所帮助</strong>
         ！
       </p>
+      <!-- <h3>十三分</h3> -->
+      <p style="margin: 0;padding: 0; text-indent: 0">网站的含义：
+      </p>
+      <ul style="list-style: none;">
+        <li>1、致敬！</li>
+        <li>2、种瓜得瓜，种豆得豆。
+        </li>
+        <li>3、一辈子的面朝黄土，背朝天！</li>
+        <li>4、农村小伙，土生土长。</li>
+        <li>5、老一辈人守着一亩三分地，混了这么些年，也要开始守着这一亩三分地！</li>
+        <li>6、讽刺！</li>
+      </ul>
+
+
 
       <h1>短唠</h1>
       <p>
@@ -81,7 +87,27 @@
       <!-- 突然发现很幼稚 -->
 
       <!-- 建议框和侵染图片 -->
-      <div class="cate">
+
+      <div class="jianyi">
+        <div class="jianyi-jianjie">
+          <p>
+            Google上搜了更多的个人博客之后！发现自己的行为是多么幼稚！人物志和未来模块暂且搁置；有什么想法或意见的话-都可以在下面可提交！
+          </p>
+        </div>
+        <div class="jianyi-text">
+          <n-space vertical>
+            <n-input v-model:value="postDataInput" type="textarea" placeholder="Go-Go-Go!..." name="jianyi"
+              maxlength="3000" show-count clearable minlength="10" />
+          </n-space>
+          <n-button @click="throttledpostData">
+            <Icon size="28">
+              <IosArrowRoundForward />
+            </Icon>
+            提交
+          </n-button>
+        </div>
+      </div>
+      <!-- <div class="cate">
         <div class="cateImg">
           <div class="catName">
             <ul class="post-categories">
@@ -96,7 +122,7 @@
         <div class="jianyi">
           <div class="jianyi-jianjie">
             <p>
-              Google上搜了更多的个人博客之后！发现自己的行为是多么幼稚！人物志和未来模块暂且搁置；另-你有什么想法或意见的话-都可以在下面可提交，欢迎！作者会每条认真查看。
+              Google上搜了更多的个人博客之后！发现自己的行为是多么幼稚！人物志和未来模块暂且搁置；有什么想法或意见的话-都可以在下面可提交！
             </p>
           </div>
           <div class="jianyi-text">
@@ -120,28 +146,45 @@
             </n-button>
           </div>
         </div>
-      </div>
+
+       
+      </div> -->
+
+      <h1>注意</h1>
+      <p style="color: #d7d7d6;">访问最好用电脑、谷歌浏览器访问；<br>
+        1、网站采用的是GIscus评论组件，组件调用的是Github的接口 加载会很慢，可能会加载失败！ 大力推荐你们用Github！是一个版本控制工具，也是一个小仓库。<br>
+        2、评论的话需要登陆自身已有github账号！没有的需要到Github注册（全英文可能会有些麻烦：国产的浏览器翻译功能都很友好）。<br>
+        3、一个网站的内容 和站主的经经历、见解、思维有很大关系！他有点失败：这个借鉴借鉴就可以（希望能有让你们借鉴的地方！）。<br>
+        4、像所有网络平台一样，它会记录访问者的IP地址 ——>这个你要注意哈！<br>
+
+      <ul>
+        <li>如果有侵权：请及时告知，站主会及时处理！ 邮箱：rhaoshuang@163.com</li>
+        <li>如果网站有任何问题，可评论留言，或发上述邮箱，谢谢！</li>
+      </ul>
+
+      </p>
+
       <div class="xiangyan">
         <h2>
           你好陌生人，承蒙遇见，三生有幸，祝你永远年轻，永远热泪盈眶，终身美丽。
         </h2>
-        <span style="float: right; color: #acb3b9"
-          >———— 相言于：<a
-            href="https://gordonsky.cn/about"
-            style="text-decoration: none; color: #acb3b9"
-            >https://gordonsky.cn/about</a
-          ></span
-        >
+        <span style="float: right; color: #acb3b9">———— 相言于：<a href="https://gordonsky.cn/about"
+            style="text-decoration: none; color: #acb3b9">https://gordonsky.cn/about</a></span>
       </div>
 
       <h1 class="connect-me">联系他</h1>
       <p>
-        天马行空的想法；疯狂的人 疯狂的事；无论什么都可以发邮箱：
+        门庭冷落，宾客稀少，勿盼回信！
         rhaoshuang@163.com ！
       </p>
+
+
+
     </div>
-    <div class="comment">
-      <Giscus />
+    <div class="pinglun">
+      <div class="comment">
+        <Giscus />
+      </div>
     </div>
   </div>
 </template>
@@ -205,12 +248,13 @@ document.title = "主页 - 十三分地";
 
 <style scoped>
 .container {
+  /* border: 1px solid red; */
   margin: 3rem auto;
   padding: 30px 50px 50px 50px;
   max-width: 850px;
   /* overflow: hidden; */
   background: #20211e;
-  height: 100%;
+  height: 120%;
 
   -webkit-font-smoothing: antialiased;
   --gqui-fs: 16px;
@@ -219,9 +263,15 @@ document.title = "主页 - 十三分地";
   color: var(--bc13);
   font-size: var(--gqui-fs);
   text-rendering: optimizeLegibility;
-  position: relative;
+  /* position: relative; */
   /* z-index: 0; */
 }
+
+.pinglun {
+  /* border: 1px solid red; */
+  padding: 2em;
+}
+
 @media screen and (max-width: 768px) {
   .container {
     padding: 0.8em;
@@ -291,16 +341,21 @@ document.title = "主页 - 十三分地";
   width: 40px;
   background: #fff;
 }
+
 /* 轮播图文字 */
 .carousel-text {
   position: absolute;
   bottom: 8%;
-  left: 3%; /* 将文字水平居中 */
+  left: 3%;
+  /* 将文字水平居中 */
   /* transform: translateX(-50%); 水平居中文本 */
-  color: #acb393; /* 设置文字颜色为白色 */
-  padding: 10px; /* 设置内边距 */
+  color: #acb393;
+  /* 设置文字颜色为白色 */
+  padding: 10px;
+  /* 设置内边距 */
   width: 70%;
 }
+
 .carousel-text h1 {
   color: #fff;
   font-size: calc(2.4 * var(--lem));
@@ -308,6 +363,7 @@ document.title = "主页 - 十三分地";
   /* text-indent: em; */
   margin-bottom: 0;
 }
+
 .carousel-text h5 {
   font-size: calc(0.85 * var(--lem));
   margin-top: 0.4rem;
@@ -341,6 +397,7 @@ h1 {
 
 .xiangyan {
   border: 1px solid transparent;
+  margin-top: 12%;
   /* clear: both; */
 }
 
@@ -358,6 +415,7 @@ h1 {
     font-size: calc(1.2 * var(--lem));
     /* vertical-align: baseline; */
   }
+
   h1 {
     font-size: 1.4em;
     margin-top: var(--gqui-h2-pt);
@@ -376,11 +434,8 @@ h1 {
 .container strong {
   position: relative;
   font-weight: bold;
-  background: linear-gradient(
-      rgba(174, 114, 35, 0.55),
-      rgba(128, 147, 44, 0.85)
-    )
-    no-repeat left 100% / 100% 52%;
+  background: linear-gradient(rgba(174, 114, 35, 0.55),
+      rgba(128, 147, 44, 0.85)) no-repeat left 100% / 100% 52%;
   font-style: normal;
 }
 
@@ -391,12 +446,14 @@ h1 {
 
 /* 侵染图 */
 .cate {
+  /* border: 1px solid rgb(196, 148, 148); */
   width: 100%;
-  height: 300px;
+  /* height: 300px; */
   position: relative;
   transition: 0.3s;
   /* min-width: 840px; */
 }
+
 .cateImg {
   width: 40%;
   height: 80%;
@@ -424,13 +481,16 @@ h1 {
   padding: 18px 30px 18px 30px;
   opacity: 0.95;
 }
+
 ul {
   list-style-type: disc;
 }
+
 .catName ul {
   padding: 0;
   margin: 0;
 }
+
 .catName ul li {
   list-style: none;
 }
@@ -454,11 +514,14 @@ li {
 
 .jianyi {
   position: relative;
-  left: 30px;
+  /* left: 30px; */
 }
+
 .n-button {
-  float: right;
+  /* float: right; */
   margin-top: 0.9em;
+  margin-left: calc(100% - 83px);
+  /* border: 1px solid red; */
 }
 
 .n-input {
@@ -474,10 +537,12 @@ li {
     position: relative;
     border-radius: 0;
   }
+
   .cate {
     width: 100%;
     height: 540px;
   }
+
   .jianyi {
     left: 0;
   }

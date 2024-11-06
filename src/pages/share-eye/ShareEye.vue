@@ -10,7 +10,7 @@
           <div class="menu">
             <span><a href="#">分类：</a></span>
             <span><a href="#" @click="fn_blog">个人日志</a></span>
-            <span><a href="#" @click="fn_reference">技术</a></span>
+            <span><a href="http://2029.today">技术</a></span>
             <span><a href="#" @click="fn_goodarticles">优选文章</a></span>
           </div>
         </nav>
